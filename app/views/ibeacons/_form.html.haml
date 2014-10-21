@@ -1,0 +1,208 @@
+%div{:class=>'dragbox autodiv w922'}
+  .drag_head
+    %h2 Beacon Registration:
+    -#.drag_btn
+    -#  %a{:href => '#'}
+  %div{:class=>'innerpage2 clearfix'}
+    = form_for @ibeacon, html: {id: :frm_save_ibeacon} do |f|
+      - if @ibeacon.errors.any?
+        #error_explanation
+          %h2= "#{pluralize(@ibeacon.errors.count, "error")} prohibited this ibeacon from being saved:"
+          %ul
+            - @ibeacon.errors.full_messages.each do |msg|
+              %li= msg
+      .beacon_left
+        .popup_row.clearfix
+          = f.label :name,'Name*', :class=>'title_name'
+          .popup_fild
+            = f.text_field :name, :class=>'textbox2 boxw250'
+        .popup_row.clearfix
+          = f.label :location,'Location',:class=>'title_name'
+          .popup_fild
+            .selectbox5
+              = select_tag(:location1, options_from_collection_for_select(Location.active, :id, :name, @ibeacon_location && @ibeacon_location != "" ? @ibeacon_location.id : ""), :prompt => "Select location", :onchange => @ibeacon.new_record? ? "getStores(this.value, 'get_ibeacon_stores')" : "getStores(this.value, 'get_ibeacon_stores', #{@ibeacon.id})", :class=>'select1')
+              = #select(:location, :location_id ,Location.active.collect {|l| [l.name, l.id]},{:include_blank => "Select location"}, {:class=>'select1'})
+              = link_to "Add", new_location_path(:flag => "Ibeacon"), :class => "add_btn fancybox fancybox.ajax"
+        .popup_row.clearfix
+          = f.label :store,'Store*', :class=>'title_name'
+          .popup_filds
+            .selectbox5
+            #stores
+              - if !@ibeacon.new_record? && @ibeacon_location && @ibeacon_location != ""
+                .selectbox5
+                  = f.select(:store_id, options_from_collection_for_select(@stores, :id, :name, @ibeacon_store ? @ibeacon_store.id : ""),{:include_blank=> 'Select store'}, :class=> 'select1')
+                  = link_to "Add", new_store_path(:flag => "Ibeacon"), :class => "add_btn fancybox fancybox.ajax"
+        .popup_row.clearfix
+          = f.label :description,'Description', :class=>'title_name'
+          .popup_fild
+            = f.text_area :description, :class=>'textbox2 boxw250'
+        / .popup_row.clearfix
+        /   = f.label :status,'Status:',:class=>'title_name'
+        .popup_row.clearfix
+          %label.title_name Status
+          .popup_fild.switch
+            %label.status_active.selected
+              %span Public
+            %label.status
+              %span Private
+              = f.check_box :is_active,:class=>'checkbox'
+    
+
+                                        
+      .beacon_right                  
+        .popup_row.clearfix
+          = f.label :broadcast_id,'Broadcast ID*', :class=>'title_name'
+          .popup_fild
+            = f.text_field :broadcast_id, :class=>'textbox2 boxw180'
+        .popup_row.clearfix
+          = f.label :uuid,'UUID*', :class=>'title_name'
+          .popup_fild
+            = f.text_field :uuid, :class=>'textbox2 boxw180'
+        .popup_row.clearfix
+          = f.label :major_id,'Major*', :class=>'title_name'
+          .popup_fild
+            = f.text_field :major_id, :class=>'textbox2 boxw180'
+        .popup_row.clearfix
+          = f.label :minor_id,'Minor*', :class=>'title_name'
+          .popup_fild
+            = f.text_field :minor_id, :class=>'textbox2 boxw180'
+        .popup_row.clearfix
+          = f.label :broadcasting_power,'Broadcastin Power (db):',:class=>'title_name'
+          .popup_fild
+            = f.text_field :broadcasting_power, :class=>'textbox2 boxw180'
+        .popup_row.clearfix
+          = f.label :broadcasting_interval,'Broadcastin Interval (db):', :class=>'title_name'
+          .popup_fild
+            = f.text_field :broadcasting_interval, :class=>'textbox2 boxw180'
+      .button_wrapper.clear.padt15
+        = f.submit 'Save', :class=>'blue_btn', onclick: "return frm_validate_ibeacon()"
+        = link_to 'Cancel', ibeacons_path, :class=>'blue_btn'
+
+:javascript
+  (function( $ ) {
+  $.widget( "custom.combobox", {
+  _create: function() {
+  this.wrapper = $( "<span>" )
+  .addClass( "custom-combobox" )
+  .insertAfter( this.element );
+  this.element.hide();
+  this._createAutocomplete();
+  this._createShowAllButton();
+  },
+  _createAutocomplete: function() {
+  var selected = this.element.children( ":selected" ),
+  value = selected.val() ? selected.text() : "";
+  this.input = $( "<input>" )
+  .appendTo( this.wrapper )
+  .val( value )
+  .attr( "title", "" )
+  .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+  .autocomplete({
+  delay: 0,
+  minLength: 0,
+  source: $.proxy( this, "_source" )
+  })
+  .tooltip({
+  tooltipClass: "ui-state-highlight"
+  });
+  this._on( this.input, {
+  autocompleteselect: function( event, ui ) {
+  ui.item.option.selected = true;
+  this._trigger( "select", event, {
+  item: ui.item.option
+  });
+  },
+  autocompletechange: "_removeIfInvalid"
+  });
+  },
+  _createShowAllButton: function() {
+  var input = this.input,
+  wasOpen = false;
+  $( "<a>" )
+  .attr( "tabIndex", -1 )
+  .attr( "title", "Show All Items" )
+  .tooltip()
+  .appendTo( this.wrapper )
+  .button({
+  icons: {
+  primary: "ui-icon-triangle-1-s"
+  },
+  text: false
+  })
+  .removeClass( "ui-corner-all" )
+  .addClass( "custom-combobox-toggle ui-corner-right" )
+  .mousedown(function() {
+  wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+  })
+  .click(function() {
+  input.focus();
+  // Close if already visible
+  if ( wasOpen ) {
+  return;
+  }
+  // Pass empty string as value to search for, displaying all results
+  input.autocomplete( "search", "" );
+  });
+  },
+  _source: function( request, response ) {
+  var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+  response( this.element.children( "option" ).map(function() {
+  var text = $( this ).text();
+  if ( this.value && ( !request.term || matcher.test(text) ) )
+  return {
+  label: text,
+  value: text,
+  option: this
+  };
+  }) );
+  },
+  _removeIfInvalid: function( event, ui ) {
+  // Selected an item, nothing to do
+  if ( ui.item ) {
+  return;
+  }
+  // Search for a match (case-insensitive)
+  var value = this.input.val(),
+  valueLowerCase = value.toLowerCase(),
+  valid = false;
+  this.element.children( "option" ).each(function() {
+  if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+  this.selected = valid = true;
+  return false;
+  }
+  });
+  // Found a match, nothing to do
+  if ( valid ) {
+  return;
+  }
+  // Remove invalid value
+  this.input
+  .val( "" )
+  .attr( "title", value + " didn't match any item" )
+  .tooltip( "open" );
+  this.element.val( "" );
+  this._delay(function() {
+  this.input.tooltip( "close" ).attr( "title", "" );
+  }, 2500 );
+  this.input.data( "ui-autocomplete" ).term = "";
+  },
+  _destroy: function() {
+  this.wrapper.remove();
+  this.element.show();
+  }
+  });
+  })( jQuery );
+  $(function() {
+  $( "#location" ).combobox();
+  $( "#toggle" ).click(function() {
+  $( "#location" ).toggle();
+  });
+  });
+  $(function() {
+  $( "#ibeacon_store_id" ).combobox();
+  $( "#toggle" ).click(function() {
+  $( "#ibeacon_store_id" ).toggle();
+  });
+  });
+
+

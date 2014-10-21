@@ -1,0 +1,150 @@
+.dragbox_content.clearfix
+  .box_row.clearfix
+    .fildbox
+      %label.username Name
+      %input.textbox2{:type => "text"}/
+    .fildbox
+      %label.username Status
+      .selectbox
+        %select.select1
+          %option Select Status
+          %option india
+          %option USA
+    .fildbox
+      %label.username Email Address
+      %input.textbox2{:type => "text"}/
+      %input.blue_btn.mtop10{:type => "submit", :value => "Search"}/
+    .fildbox
+      %label.username Contact Number
+      %input.textbox2{:type => "text"}/
+      %input.blue_btn.mtop10{:type => "submit", :value => "Cancel"}/
+  = form_for :ibeacon ,:url => remove_multiple_ibeacon_path, :html=>{:id=>'frm'} do |f|
+    = hidden_field_tag :controller_type, self.controller_name
+    .user_details.clearfix
+      %h3 User Details
+      .selectbox.blueselect.frd
+        = f.select(:name, [['Delete', 'delete'], ['Change Status', 'changestatus']],{:include_blank=> 'Select Action'},{:class=>'select1'})
+        = f.submit 'Submit', :class=>'blue_btn'
+      %label.actionlabel Actions
+    #accordion.tablerow.clearfix
+      %table.tablelist{border: "0", cellpadding: "0", cellspacing: "0", width: "100%"}
+        %tr
+          %th{align: "left", valign: "middle"}
+          %th{align: "left", valign: "middle"} Sr. No.
+          %th{align: "left", valign: "middle"} Name
+          %th{align: "left", valign: "middle"} Email id
+          %th{align: "left", valign: "middle"} Address
+          %th{align: "left", valign: "middle"} Mobile No
+          %th{align: "left", valign: "middle"} Alternate No
+          %th{align: "left", valign: "middle"} Status
+          %th{align: "left", valign: "middle"} Action
+          %th{align: "left", valign: "middle"}
+        - @count=0
+        - Admin.all.order("id desc").limit(5).each do |admin|
+
+      -#    %tr
+      -#      %td{align: "left", valign: "middle"}
+      -#        .checkbox_list.checktext
+      -#          = check_box('admin[chk_ids]', admin.id, :class=>'checkbox')
+      -#      %td{align: "left", valign: "middle"}= @count = @count+1
+      -#      %td{align: "left", valign: "middle"}= admin.first_name
+      -#      %td{align: "left", valign: "middle"}= admin.email
+      -#      %td{align: "left", valign: "middle"}= #admin.addresses.try(:street)
+      -#      %td{align: "left", valign: "middle"}= admin.mobile_no
+      -#      %td{align: "left", valign: "middle"}= admin.landline_no
+      -#      %td{align: "left", valign: "middle"}= admin.is_active
+      -#      %td{align: "left", valign: "middle"}= link_to 'Edit', #edit_ibeacon_path(ibeacon)
+      -#%br
+
+  -#.user_details.clearfix
+  -#  %h3 User Details
+  -#  %input.blue_btn.frd{:type => "submit", :value => "Submit"}/
+  -#  .selectbox.blueselect.frd
+  -#    %select.select1
+  -#      %option Select Action
+  -#      %option india
+  -#      %option USA
+  -#  %label.actionlabel Actions
+  -##accordion.tablerow.clearfix
+  -#  .panel-body
+  -#    %table.tablelist{:border => "0", :cellpadding => "0", :cellspacing => "0", :width => "100%"}
+  -#      %tr
+  -#        %th{:align => "left", :valign => "middle"} &nbsp;
+  -#        %th{:align => "left", :valign => "middle"} Sr. No.
+  -#        %th{:align => "left", :valign => "middle"} Name
+  -#        %th{:align => "left", :valign => "middle"} Email Id
+  -#        %th{:align => "left", :valign => "middle"} Address
+  -#        %th{:align => "left", :valign => "middle"} Mobile Number
+  -#        %th{:align => "left", :valign => "middle"} Alternate Number
+  -#        %th{:align => "left", :valign => "middle"} Status
+  -#        %th{:align => "left", :valign => "middle"} Action
+  -#      %tr
+  -#        %td{:align => "left", :valign => "middle"}
+  -#          %input.checkbox{:type => "checkbox"}/
+  -#        %td{:align => "left", :valign => "middle"} 1
+  -#        %td{:align => "left", :valign => "middle"} Mr. Robert Will..
+  -#        %td{:align => "left", :valign => "middle"} robert.williams@gm..
+  -#        %td{:align => "left", :valign => "middle"}
+  -#          2531 Technology Drive
+  -#          %br/
+  -#          Suite 312 Elgin IL - 60124
+  -#        %td{:align => "left", :valign => "middle"} 239-754-9875
+  -#        %td{:align => "left", :valign => "middle"} 239-754-9875
+  -#        %td{:align => "left", :valign => "middle"} Active
+  -#        %td{:align => "left", :valign => "middle"} Edit
+  -#      %tr
+  -#        %td{:align => "left", :valign => "middle"}
+  -#          %input.checkbox{:type => "checkbox"}/
+  -#        %td{:align => "left", :valign => "middle"} 2
+  -#        %td{:align => "left", :valign => "middle"} Mr. Robert Will..
+  -#        %td{:align => "left", :valign => "middle"} robert.williams@gm..
+  -#        %td{:align => "left", :valign => "middle"}
+  -#          2531 Technology Drive
+  -#          %br/
+  -#          Suite 312 Elgin IL - 60124
+  -#        %td{:align => "left", :valign => "middle"} 239-754-9875
+  -#        %td{:align => "left", :valign => "middle"} 239-754-9875
+  -#        %td{:align => "left", :valign => "middle"} Active
+  -#        %td{:align => "left", :valign => "middle"} Edit
+  -#      %tr
+  -#        %td{:align => "left", :valign => "middle"}
+  -#          %input.checkbox{:type => "checkbox"}/
+  -#        %td{:align => "left", :valign => "middle"} 3
+  -#        %td{:align => "left", :valign => "middle"} Mr. Robert Will..
+  -#        %td{:align => "left", :valign => "middle"} robert.williams@gm..
+  -#        %td{:align => "left", :valign => "middle"}
+  -#          2531 Technology Drive
+  -#          %br/
+  -#          Suite 312 Elgin IL - 60124
+  -#        %td{:align => "left", :valign => "middle"} 239-754-9875
+  -#        %td{:align => "left", :valign => "middle"} 239-754-9875
+  -#        %td{:align => "left", :valign => "middle"} Active
+  -#        %td{:align => "left", :valign => "middle"} Edit
+  -#      %tr
+  -#        %td{:align => "left", :valign => "middle"}
+  -#          %input.checkbox{:type => "checkbox"}/
+  -#        %td{:align => "left", :valign => "middle"} 4
+  -#        %td{:align => "left", :valign => "middle"} Mr. Robert Will..
+  -#        %td{:align => "left", :valign => "middle"} robert.williams@gm..
+  -#        %td{:align => "left", :valign => "middle"}
+  -#          2531 Technology Drive
+  -#          %br/
+  -#          Suite 312 Elgin IL - 60124
+  -#        %td{:align => "left", :valign => "middle"} 239-754-9875
+  -#        %td{:align => "left", :valign => "middle"} 239-754-9875
+  -#        %td{:align => "left", :valign => "middle"} Active
+  -#        %td{:align => "left", :valign => "middle"} Edit
+  -#      %tr
+  -#        %td{:align => "left", :valign => "middle"}
+  -#          %input.checkbox{:type => "checkbox"}/
+  -#        %td{:align => "left", :valign => "middle"} 5
+  -#        %td{:align => "left", :valign => "middle"} Mr. Robert Will..
+  -#        %td{:align => "left", :valign => "middle"} robert.williams@gm..
+  -#        %td{:align => "left", :valign => "middle"}
+  -#          2531 Technology Drive
+  -#          %br/
+  -#          Suite 312 Elgin IL - 60124
+  -#        %td{:align => "left", :valign => "middle"} 239-754-9875
+  -#        %td{:align => "left", :valign => "middle"} 239-754-9875
+  -#        %td{:align => "left", :valign => "middle"} Active
+  -#        %td{:align => "left", :valign => "middle"} Edit

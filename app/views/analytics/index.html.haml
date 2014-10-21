@@ -1,0 +1,492 @@
+-#%ul.menu
+-#  %li.toggle1 Monthly
+-#  %li.toggle2 Daily
+-#  %li.toggle3 Weekly
+-#
+-#.container1
+-#  .toggle1{:id => "monthly_container"}
+-#  .toggle2{:id => "container"}
+-#  .toggle3{:id => "weekly_container"}
+-#:javascript
+-#  $(function () {
+-#  $('.menu>li').on('click',function(e){
+-#    $('.container1>.'+ e.target.classList[0]).show().siblings().hide();
+-#  });
+-#
+-#  var count = JSON.parse("#{@count}");
+-#
+-#  var date = #{@date}
+-#  $('#container').highcharts({
+-#            chart: {
+-#                type: 'area'
+-#            },
+-#            title: {
+-#                text: 'Daily Average Contacts'
+-#            },
+-#           xAxis: { type: 'datetime',
+-#              categories: date
+-#            },
+-#            yAxis: {
+-#                title: {
+-#                    text: 'Contacts'
+-#                },
+-#                labels: {
+-#                    formatter: function() {
+-#                        return this.value;
+-#                    }
+-#                }
+-#            },
+-#            tooltip: {
+-#                shared: true,
+-#                valueSuffix: 'Contacts'
+-#            },
+-#            plotOptions: {
+-#                area: {
+-#                    stacking: 'normal',
+-#                    lineColor: '#4068E0',
+-#                    lineWidth: 2,
+-#                    marker: {
+-#                        lineWidth: 1,
+-#                        lineColor: '#4068E0'
+-#                    }
+-#                }
+-#            },
+-#            series: [{
+-#               name: 'contact',
+-#              data: count
+-#            }]
+-#        });
+-#
+-#  $('.toggle1').on('click', function () {
+-#  var month = #{@month_count};
+-#
+-#  var name = #{@month_name};
+-#
+-#  $('#monthly_container').highcharts({
+-#            chart: {
+-#                type: 'area'
+-#            },
+-#            title: {
+-#                text: 'Monthly Average Clicks'
+-#            },
+-#           xAxis: { type: 'datetime',
+-#              categories: name
+-#            },
+-#            yAxis: {
+-#                title: {
+-#                    text: 'Contacts'
+-#                },
+-#                labels: {
+-#                    formatter: function() {
+-#                        return this.value;
+-#                    }
+-#                }
+-#            },
+-#            tooltip: {
+-#                shared: true,
+-#                valueSuffix: 'Contacts'
+-#            },
+-#            plotOptions: {
+-#                area: {
+-#                    stacking: 'normal',
+-#                    lineColor: '#4068E0',
+-#                    lineWidth: 2,
+-#                    marker: {
+-#                        lineWidth: 1,
+-#                        lineColor: '#4068E0'
+-#                    }
+-#                }
+-#            },
+-#            series: [{
+-#               name: 'contact',
+-#              data: month
+-#            }]
+-#        });
+-#    });
+-#  $('.toggle3').on('click', function () {
+-#  var week_count = JSON.parse("#{@week_count}");
+-#
+-#  var week = #{@week}
+-#  $('#weekly_container').highcharts({
+-#            chart: {
+-#                type: 'area'
+-#            },
+-#            title: {
+-#                text: 'Weekly Average Contact'
+-#            },
+-#           xAxis: { type: 'datetime',
+-#              categories: week
+-#            },
+-#            yAxis: {
+-#                title: {
+-#                    text: 'Contacts'
+-#                },
+-#                labels: {
+-#                    formatter: function() {
+-#                        return this.value;
+-#                    }
+-#                }
+-#            },
+-#            tooltip: {
+-#                shared: true,
+-#                valueSuffix: 'Contacts'
+-#            },
+-#            plotOptions: {
+-#                area: {
+-#                    stacking: 'normal',
+-#                    lineColor: '#4068E0',
+-#                    lineWidth: 2,
+-#                    marker: {
+-#                        lineWidth: 1,
+-#                        lineColor: '#4068E0'
+-#                    }
+-#                }
+-#            },
+-#            series: [{
+-#               name: 'contact',
+-#              data: week_count
+-#            }]
+-#        });
+-#    });
+-#  });
+/ Beacon Registration popup
+.dragbox.autodiv
+  .drag_head
+    %h2 Total Store Traffic
+  .innerpage2.clearfix
+    .box_row.clearfix.foribeacon
+      .fildbox
+        .selectbar
+          %select.styled{:name => ""}
+            %option Day
+            %option Week
+            %option Month
+    %br/
+    .traffic-chart
+      .demo-section.k-content
+        #chart
+  / Beacon Registration popup
+.dragbox.minhight460_new.w410.fld
+  .drag_head
+    %h2 Store areas with most traffic
+  .innerpage2.clearfix
+    .box_row.clearfix.foribeacon
+      .fildbox
+        .selectbar
+          %select.styled{:name => ""}
+            %option Day
+            %option Week
+            %option Month
+    .store-areas
+      = image_tag "store-areas-traffic.png"
+  / Beacon Registration popup
+.dragbox.minhight460_new.w770.frd
+  .drag_head
+    %h2 Visit by age group
+  .innerpage2.clearfix
+    .box_row.clearfix.foribeacon
+      .fildbox
+        .selectbar
+          %select.styled{:name => ""}
+            %option Day
+            %option Week
+            %option Month
+    .age-group
+      %div{:style => "float:left; width:50%; hight:30%"}
+        .demo-section.k-content
+          #chart2{:style => "min-width: 310px; height: 400px; margin: 0 auto"}
+      %div{:style => "float:left; width:50%; hight:30%"}
+        .demo-section.k-content
+          #chart3
+  / Beacon Registration popup
+.dragbox.minhight460.w410.fld
+  .drag_head
+    %h2 Beacon Battery
+  .innerpage2.clearfix
+    .beaconBattery
+      %table{:border => "0", :cellpadding => "0", :cellspacing => "0", :width => "100%"}
+        %tr
+          %td{:width => "83%"} Entry Beacon
+          %td{:width => "12%"}
+            = image_tag "battery03.png"
+        %tr
+          %td Floor-1 Beacon
+          %td
+            = image_tag "battery02.png"
+        %tr
+          %td Floor-2 Beacon
+          %td
+            = image_tag "battery00.png"
+        %tr
+          %td Floor-3 Beacon
+          %td
+            = image_tag "battery01.png"
+        %tr
+          %td Offers Beacon
+          %td
+            = image_tag "battery02.png"
+        
+  / Beacon Registration popup
+.dragbox.minhight460.w770.frd
+  .drag_head
+    %h2 Return Rate
+  .innerpage3.clearfix
+    .return-rate
+      .return-rate-wrap
+        %ul.fld
+          %li % Returning on Day
+          %li
+            %select.styled{:name => ""}
+              %option 1
+              %option 2
+              %option 3
+              %option 4
+              %option 5
+              %option 6
+              %option 7
+              %option 8
+          %li After Install
+        %ul.frd
+          %li Compare to Day
+          %li
+            %select.styled{:name => ""}
+              %option 1
+              %option 2
+              %option 3
+              %option 4
+              %option 5
+              %option 6
+              %option 7
+              %option 8
+      %div{:style => "clear:both;"}
+      .return-rate-chart
+        /
+          <div class="demo-section k-content">
+          <div id="chart5" style="background-color:red;"></div>
+          </div>
+        = image_tag 'return-rate.png', :height => '320', :style => 'width:auto !important;', :width => '525'
+        / %img{:alt => "", :height => "320", :src => "images/return-rate.png", :style => "width:auto !important;", :width => "525"}/
+  / Beacon Registration popup
+:css
+  #chart5{background:rgba(255, 255, 255, 0.2) !important;}
+  #chart5 svg{background-color:transparent !important;}
+  #chart5 svg path {background-color:transparent !important;}
+:javascript
+      $('#chart').highcharts({
+        title: {
+            text: ' Total Store Traffic',
+            x: -20 //center
+        },
+        xAxis: {
+            categories: ['9AM', '10AM', '11AM', '12AM', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM','10PM']
+        },
+        credits :false,
+        yAxis: {
+            title: {
+                text: ''
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: ' Visits'
+        },
+        
+        series: [{
+            name: 'Visit',
+            data: [9, 10, 11, 12, 15, 14, 15, 6, 17, 18, 9, 20, 26, 11]
+        }]
+  });
+//});
+
+:javascript
+        $(function () {
+
+    var colors = Highcharts.getOptions().colors,
+        categories = ['WOMEN'],
+        data = [{
+            y: 55.11,
+            color: colors[0],
+            drilldown: {
+                name: 'WOMEN AGES',
+                categories: ['18-20', '20-25', '25-35'],
+                data: [4, 2, 3],
+                color: colors[0]
+            }
+        }],
+        browserData = [],
+        versionsData = [],
+        i,
+        j,
+        dataLen = data.length,
+        drillDataLen,
+        brightness;
+
+
+    // Build the data arrays
+    for (i = 0; i < dataLen; i += 1) {
+
+        // add browser data
+        browserData.push({
+            name: categories[i],
+            y: data[i].y,
+            color: data[i].color
+        });
+
+        // add version data
+        drillDataLen = data[i].drilldown.data.length;
+        for (j = 0; j < drillDataLen; j += 1) {
+            brightness = 0.2 - (j / drillDataLen) / 5;
+            versionsData.push({
+                name: data[i].drilldown.categories[j],
+                y: data[i].drilldown.data[j],
+                color: Highcharts.Color(data[i].color).brighten(brightness).get()
+            });
+        }
+    }
+
+    // Create the chart
+    $('#chart2').highcharts({
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: 'WOMEN'
+        },
+        yAxis: {
+            title: {
+                text: 'Total percent market share'
+            }
+        },
+        credits :false,
+        plotOptions: {
+            pie: {
+                shadow: false,
+                center: ['50%', '50%']
+            }
+        },
+        tooltip: {
+            valueSuffix: '%'
+        },
+        series: [{
+            name: 'male',
+            data: browserData,
+            size: '25%',
+            dataLabels: {
+                formatter: function () {
+                    return this.y > 5 ? this.point.name : null;
+                },
+                color: 'white',
+                distance: -30
+            }
+        }, {
+            name: 'Ages',
+            data: versionsData,
+            size: '40%',
+            innerSize: '30%',
+            dataLabels: {
+                formatter: function () {
+                    // display only if larger than 1
+                    return this.y > 1 ? '<b>' + this.point.name + ':</b> ' + this.y + '%'  : null;
+                }
+            }
+        }]
+    });
+    });
+:javascript
+        $(function () {
+
+    var colors = Highcharts.getOptions().colors,
+        categories = ['MEN'],
+        data = [{
+            y: 55.11,
+            color: colors[0],
+            drilldown: {
+                name: 'MEN AGES',
+                categories: ['18-25', '22-35', '30-40', '40-50'],
+                data: [10, 7, 33, 2],
+                color: colors[0]
+            }
+        }],
+        browserData = [],
+        versionsData = [],
+        i,
+        j,
+        dataLen = data.length,
+        drillDataLen,
+        brightness;
+
+
+    // Build the data arrays
+    for (i = 0; i < dataLen; i += 1) {
+
+        // add browser data
+        browserData.push({
+            name: categories[i],
+            y: data[i].y,
+            color: data[i].color
+        });
+
+        // add version data
+        drillDataLen = data[i].drilldown.data.length;
+        for (j = 0; j < drillDataLen; j += 1) {
+            brightness = 0.2 - (j / drillDataLen) / 5;
+            versionsData.push({
+                name: data[i].drilldown.categories[j],
+                y: data[i].drilldown.data[j],
+                color: Highcharts.Color(data[i].color).brighten(brightness).get()
+            });
+        }
+    }
+
+    // Create the chart
+    $('#chart3').highcharts({
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: 'MEN'
+        },
+        yAxis: {
+            title: {
+                text: 'Total percent market share'
+            }
+        },
+        plotOptions: {
+            pie: {
+                shadow: false,
+                center: ['50%', '50%']
+            }
+        },
+        credits :false,
+        tooltip: {
+            valueSuffix: '%'
+        },
+        series: [{
+            name: 'Female',
+            data: browserData,
+            size: '30%',
+            dataLabels: {
+                formatter: function () {
+                    return this.y > 5 ? this.point.name : null;
+                },
+                color: 'white',
+                distance: -30
+            }
+        }, {
+            name: 'Ages',
+            data: versionsData,
+            size: '40%',
+            innerSize: '30%',
+            dataLabels: {
+                formatter: function () {
+                    // display only if larger than 1
+                    return this.y > 1 ? '<b>' + this.point.name + ':</b> ' + this.y + '%'  : null;
+                }
+            }
+        }]
+    });
+    });

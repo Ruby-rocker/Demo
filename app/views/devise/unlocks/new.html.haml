@@ -1,0 +1,15 @@
+/ %h2 Resend unlock instructions
+= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f|
+	= devise_error_messages!
+	.login_box
+		.sign_in
+			Resend unlock instructions
+		.sign_in
+			= f.label :email
+		.iconrow
+			%span.emailicon
+			= f.email_field :email, autofocus: true, :class => "textbox", placeholder: "rob@abc.com"
+		.formrow.clearfix
+			%div= f.submit "Resend unlock instructions", :class => "submitbtn"
+		.formrow.clearfix
+			= render "devise/shared/links"

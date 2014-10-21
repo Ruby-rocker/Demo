@@ -1,0 +1,33 @@
+.user_details.clearfix
+  %h3 Listing Stores
+  %input.blue_btn.frd{type: "submit", value: "Submit"}/
+  .selectbox.blueselect.frd
+    %select.select1
+      %option Select Action
+      %option Delete
+      %option Change status
+  %label.actionlabel Actions
+#accordion.tablerow.clearfix
+  %table.tablelist{border: "0", cellpadding: "0", cellspacing: "0", width: "100%"}
+    %tr
+      %th{align: "left", valign: "middle"}  
+      %th{align: "left", valign: "middle"} Sr. No.
+      %th{align: "left", valign: "middle"} Name
+      %th{align: "left", valign: "middle"} Location
+      %th{align: "left", valign: "middle"} Is Active?
+      %th{align: "left", valign: "middle"}
+      %th{align: "left", valign: "middle"}
+    - @count=0
+    - @stores.each do |store|
+      %tr
+        %td{align: "left", valign: "middle"}
+          %input.checkbox{type: "checkbox"}/
+        %td{align: "left", valign: "middle"}= @count += 1
+        %td{align: "left", valign: "middle"}= store.name
+        %td{align: "left", valign: "middle"}= store.location.name
+        %td{align: "left", valign: "middle"}= store.isactive
+        %td{align: "left", valign: "middle"}= link_to 'Show', store
+        %td{align: "left", valign: "middle"}= link_to 'Edit', edit_store_path(store)
+
+  %br
+  = link_to 'New Store', new_store_path, :class=>'blue_btn'

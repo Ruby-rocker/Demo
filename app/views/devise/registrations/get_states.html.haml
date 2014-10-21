@@ -1,0 +1,7 @@
+= javascript_include_tag 'myfunction', 'data-turbolinks-track' => true
+= javascript_include_tag 'tab', 'data-turbolinks-track' => true
+= javascript_include_tag 'jquery.uniform.min', 'data-turbolinks-track' => true
+
+.popup_fild
+  .selectbox5
+    = select_tag :admin_address_state, options_for_select(@states), :name => "admin[address][state]"  , :class=>'select1'

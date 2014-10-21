@@ -1,0 +1,16 @@
+= javascript_include_tag 'myfunction', 'data-turbolinks-track' => true
+
+%div{:class=>'dragbox autodiv w922'}
+  .drag_head
+    %h2 Add map:
+    .drag_btn
+      %a{:href => '#'}
+  %div{:class=>'innerpage2 clearfix'}
+    = form_for(:image_form, :url => {:controller => :find_ways, :action => :create_way}, :html => {:method => :post, :id => 'upload_form', :multipart => true}) do |f|
+      = f.hidden_field(:store_id, :value => params[:store_id])
+      .popup_row.clearfix
+        = f.label(:uploaded_data , :class => "title_name")
+        .popup_fild
+          .browsefild
+            = f.file_field(:uploaded_data, :class=>"file")
+      = f.submit 'Save', :class=>'blue_btn'

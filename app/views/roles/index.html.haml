@@ -1,0 +1,44 @@
+= form_for :role , :url => remove_multiple_path, :html=>{:id=>'frm2'}do |f|
+  = hidden_field_tag :controller_type, self.controller_name
+  .user_details.clearfix
+    %h3
+      = link_to 'New Role', new_role_path, :class=>'blue_btn'
+    .selectbox.blueselect.frd
+      = f.select(:name, [['Delete', 'delete'], ['Change Status', 'changestatus']],{:include_blank=> 'Select Action'},{:class=>'select1'})
+      = f.submit 'Submit', :class=>'blue_btn'
+    %label.actionlabel Actions
+  #accordion.tablerow.clearfix
+    %table.tablelist{border: "0", cellpadding: "0", cellspacing: "0", width: "100%"}
+      %tr
+        %th{align: "left", valign: "middle"}  
+        %th{align: "left", valign: "middle"} Sr. No.
+        %th{align: "left", valign: "middle"}
+          = link_to_sorted 'Name', :name
+        %th{align: "left", valign: "middle"} Description
+        %th{align: "left", valign: "middle"}
+          = link_to_sorted 'IsActive?', :is_active
+        %th{align: "left", valign: "middle"} Access Module
+        %th{align: "left", valign: "middle"}
+      - @count=0
+      - @roles.each do |role|
+        %tr
+          %td{align: "left", valign: "middle"}
+            .checkbox_list.checktext
+              = check_box('role[chk_ids]', role.id, :class=>'checkbox')
+          %td{align: "left", valign: "middle"}= @count += 1
+          %td{align: "left", valign: "middle"}= role.name
+          %td{align: "left", valign: "middle"}= role.description
+          %td{align: "left", valign: "middle"}= role.isactive
+          %td{align: "left", valign: "middle"}= role.access_module_roles.map { |amr| amr.access_module.name }.join(", ")
+          %td{align: "left", valign: "middle"}= link_to 'Edit', edit_role_path(role)
+
+:javascript
+  $('#frm2').submit(function(event){
+    var valDDL = $('#role_name').val();
+    if(valDDL=="")
+      {
+        event.preventDefault();
+        alert("Select an Action");
+      }
+
+  });

@@ -1,0 +1,31 @@
+.user_details.clearfix
+  %h3 Listing beacon_ranges
+  %input.blue_btn.frd{type: "submit", value: "Submit"}/
+  .selectbox.blueselect.frd
+    %select.select1
+      %option Select Action
+      %option Delete
+      %option Change status
+  %label.actionlabel Actions
+#accordion.tablerow.clearfix
+  %table.tablelist{border: "0", cellpadding: "0", cellspacing: "0", width: "100%"}
+    %tr
+      %th{align: "left", valign: "middle"}  
+      %th{align: "left", valign: "middle"} Sr. No.
+      %th{align: "left", valign: "middle"} Name
+      %th{align: "left", valign: "middle"} Is Active?
+      %th{align: "left", valign: "middle"}
+      %th{align: "left", valign: "middle"}
+    - @count=0
+    - @beacon_ranges.each do |beacon_range|
+      %tr
+        %td{align: "left", valign: "middle"}
+          %input.checkbox{type: "checkbox"}/
+        %td{align: "left", valign: "middle"}= @count += 1
+        %td{align: "left", valign: "middle"}= beacon_range.name
+        %td{align: "left", valign: "middle"}= beacon_range.isactive
+        %td{align: "left", valign: "middle"}= link_to 'Show', beacon_range
+        %td{align: "left", valign: "middle"}= link_to 'Edit', edit_beacon_range_path(beacon_range)
+
+  %br
+  = link_to 'New Beacon Range', new_beacon_range_path, :class=>'blue_btn'

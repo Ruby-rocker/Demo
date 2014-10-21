@@ -1,0 +1,11 @@
+= javascript_include_tag 'myfunction', 'data-turbolinks-track' => true
+= javascript_include_tag 'fancybox', 'data-turbolinks-track' => true
+= javascript_include_tag 'tab', 'data-turbolinks-track' => true
+= javascript_include_tag 'jquery.uniform.min', 'data-turbolinks-track' => true
+
+.popup_row.clearfix
+  = label_tag :store,'Store*', :class=>'title_name'
+  .popup_filds
+    .selectbox5
+      = select(:campaign, :store_id, options_from_collection_for_select(@stores, :id, :name, @campaign_store),{:prompt => "Select Store"},{:class=> 'select1', :onchange => "getBeacons(this.value, 'div_beacons', 'campaigns')"})
+      = link_to "Add", new_store_path(:flag => "Campaign", :loc_id=> @location_id), :class => "add_btn fancybox fancybox.ajax"

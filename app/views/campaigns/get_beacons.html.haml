@@ -1,0 +1,10 @@
+= javascript_include_tag 'myfunction', 'data-turbolinks-track' => true
+= javascript_include_tag 'tab', 'data-turbolinks-track' => true
+= javascript_include_tag 'jquery.uniform.min', 'data-turbolinks-track' => true
+
+
+.popup_row.clearfix
+  = label_tag :store,'Beacon*', :class=>'title_name'
+  .popup_fild
+    .selectbox5
+      = select_tag(:ibeacon_id, options_from_collection_for_select(@beacons, :id, :name), :prompt => "Select Beacon", :class=>'select1', :onchange => 'getCampaigns(this.value)')

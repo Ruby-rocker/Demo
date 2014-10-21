@@ -1,0 +1,40 @@
+-#- @locations.each do |location|
+-#  = location.name
+-#  %br
+
+= form_tag('/find_a_way', id: :frm_find_ways, multipart: true)
+/ Beacon Registration popup
+.dragbox.w680.autodiv
+  .drag_head
+    %h2 Find A Way
+    -#.drag_btn
+    -#  %a{:href => "#"}
+  .innerpage.clearfix
+    -#.store_row.clearfix
+    -#  %h2 Store Name
+  - @locations.each do |location|
+    .store_row.clearfix
+      .storename #{location.name}
+      .button_right
+        -#%input.viewbtn{:type => "submit", :value => "View"}/
+        -#.uploadbtn
+        -#  %a.blue_btn{:href => "javascript:void(0)"} Upload
+        -#  %input.browserbtn{:type => "file"}
+      - if location.stores && location.stores.count > 0
+        .heat_list.clearfix
+          - location.stores.each do |store|
+            - @image = store.images(store.id)
+            .heat_row.clearfix
+              .heat_name #{store.name}
+              .view_block
+                - if @image.present?
+                  = link_to "View", @image.attachment(:original), :class=>"fancybox"
+                - else
+                  %a{:href => "#"} Not uploaded
+              .view_block
+                = link_to "Upload", find_a_way_path(:store_id => store.id), :class => "fancybox fancybox.ajax"
+                -#%a{:href => "#"} Upload
+                -#.uploadbtn
+                -#  %a{:href => "javascript:void(0)"} Upload
+                -#  %input.browserbtn{:type => "file"}
+/ Beacon Registration popup

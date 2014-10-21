@@ -1,0 +1,41 @@
+%div{:class=>'dragbox autodiv w922'}
+  .drag_head
+    %h2 Upload certificate:
+    -#.drag_btn
+    -#  %a{:href => '#'}
+  %div{:class=>'innerpage2 clearfix'}
+    = form_for(@push_config, :url => {:controller => :push_configurations, :action => :update_configuration}, :html => {:method => :post, :multipart => true}) do |f|
+      .popup_row.clearfix
+        = f.label(:app, :class => "title_name")
+        .popup_fild
+          .browsefild
+            = f.text_field(:app, :class=>"textbox2 boxw360")
+      .popup_row.clearfix
+        = f.label(:connections, :class => "title_name")
+        .popup_fild
+          .browsefild
+            = f.text_field(:connections, :class=>"textbox2")
+      .popup_row.clearfix
+        = f.label(:enabled, :class => "title_name")
+        .popup_fild
+          .checkbox_list
+            .checktext
+              = f.check_box :enabled, :class=>'checkbox'
+      .popup_row.clearfix
+        = f.label(:certificate , :class => "title_name")
+        .popup_fild
+          .browsefild
+            = file_field_tag(:certificate, :class=>"file")
+      .popup_row.clearfix
+        = f.label(:feedback_poll, :class => "title_name")
+        .popup_fild
+          .browsefild
+            = f.text_field(:feedback_poll, :class=>"textbox2")
+      .popup_row.clearfix
+        = f.label(:sandbox, :class => "title_name")
+        .popup_fild
+          .checkbox_list
+            .checktext
+              = f.check_box :sandbox, :class=>'checkbox'
+
+      = f.submit 'Save', :class=>'blue_btn'

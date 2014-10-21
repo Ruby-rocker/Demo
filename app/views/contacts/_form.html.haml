@@ -1,0 +1,56 @@
+%div{:class=>'dragbox autodiv w922'}
+  .drag_head
+    %h2 Contact Details
+    -#.drag_btn
+    -#  %a{:href => '#'}
+  %div{:class=>'innerpage2 clearfix'}
+    -#= form_for @contact do |f|
+    = form_for @contact, {:url => send_push_notification_path} do |f|
+      .popup_content
+      - if @contact.errors.any?
+        #error_explanation
+          %h2= "#{pluralize(@contact.errors.count, "error")} prohibited this contact from being saved:"
+          %ul
+            - @contact.errors.full_messages.each do |msg|
+              %li= msg
+      .popup_row.clearfix
+        = f.label :uuid , :class=>'title_name'
+        .popup_fild
+          .selectbox3
+            = f.select(:uuid, Ibeacon.active.all.collect { |s| [s.uuid,s.uuid] }, {}, :class => 'select1')
+      .popup_row.clearfix
+        = f.label :udid, :class=>'title_name'
+        .popup_fild
+          = f.text_field :udid, :class=>'textbox2 boxw290'
+      .popup_row.clearfix
+        = f.label :first_name, :class=>'title_name'
+        .popup_fild
+          = f.text_field :first_name, :class=>'textbox2 boxw290'
+      .popup_row.clearfix
+        = f.label :last_name, :class=>'title_name'
+        .popup_fild
+          = f.text_field :last_name, :class=>'textbox2 boxw290'
+      .popup_row.clearfix
+        = f.label :email_address, :class=>'title_name'
+        .popup_fild
+          = f.email_field :email_address, :class=>'textbox2 boxw290'
+      .popup_row.clearfix
+        = f.label :contact_no, :class=>'title_name'
+        .popup_fild
+          = f.text_field :contact_no, :class=>'textbox2 boxw290'
+      .popup_row.clearfix
+        = f.label :latitude, :class=>'title_name'
+        .popup_fild
+          = f.text_field :latitude, :class=>'textbox2 boxw290'
+      .popup_row.clearfix
+        = f.label :longitude, :class=>'title_name'
+        .popup_fild
+          = f.text_field :longitude, :class=>'textbox2 boxw290'
+      .popup_row.clearfix
+        = f.label :range, :class=>'title_name'
+        .popup_fild
+          .selectbox3
+            = select_tag(:range, options_from_collection_for_select(BeaconRange.active, 'id', 'range'), :class=>'select1')
+      .popup_row.button_wrapper2
+        = f.submit 'Save',:class=>'blue_btn'
+        = link_to 'Back', contacts_path,:class=>'blue_btn'

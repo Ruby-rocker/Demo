@@ -1,0 +1,2 @@
+module TemplateMastersHelper
+end

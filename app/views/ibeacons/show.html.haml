@@ -1,0 +1,48 @@
+.user_details.clearfix
+  %h2 Beacon Detail
+  %hr
+  .innerpage2.clearfix
+    %p#notice= notice
+    .popup_row.clearfix
+      %p
+        %b Name :
+        = @ibeacon.name
+      %br/
+      %p
+        %b Description :
+        = @ibeacon.description
+      %br/
+      %p
+        %b Store :
+        = @ibeacon.store.try(:name)
+      %br/
+      %p
+        %b Broadcast :
+        = @ibeacon.broadcast_id
+      %br/
+      %p
+        %b Status :
+        = (@ibeacon.isactive ? 'Public' : 'Private')
+      %br/
+      %p
+        %b UUID :
+        = @ibeacon.uuid
+      %br/
+      %p
+        %b Major: 
+        = @ibeacon.major_id
+      %br/
+      %p
+        %b Minor:
+        = @ibeacon.minor_id
+      %br/
+      %p
+        %b Broadcastin Power(db) :
+        = @ibeacon.broadcasting_power
+      %br/
+      %p
+        %b Broadcastin Interval(db) :
+        = @ibeacon.broadcasting_interval
+      %br/
+    = link_to 'Edit', edit_ibeacon_path(@ibeacon),:class=>'blue_btn'
+    = link_to 'Back', ibeacons_path,:class=>'blue_btn'

@@ -1,0 +1,233 @@
+%div{:class=>'dragbox autodiv'}
+  .drag_head
+    %h2 Add Campaign
+= form_for @campaign,  html: {id: :frm_save_campaign} do |f|
+  %div{:class=> "innerpage2 clearfix"}
+    .template_form.w760
+      .popup_content
+        - if @campaign.errors.any?
+          #error_explanation
+            %h2= "#{pluralize(@campaign.errors.count, "error")} prohibited this campaign from being saved:"
+            %ul
+              - @campaign.errors.full_messages.each do |msg|
+                %li= msg
+      .popup_row.clearfix
+        = f.label :is_welcome, :class=>'title_name'
+        .popup_fild
+          .checkbox_list
+            .checktext
+            = f.check_box :is_welcome, {:class=>'checkbox'}
+      .popup_row.clearfix
+        = f.label :campaign_title, "Campaign Title*", :class=>'title_name'
+        .popup_fild
+          = f.text_field :title, :class=>'textbox2 boxw360'
+      .popup_row.clearfix
+        = f.label :description,'Description*', :class=>'title_name'
+        .popup_fild
+          = f.text_area :description, :rows=> 2, :class=>'textbox2 boxw360', :placeholder=>'up to 42 characters'
+      .popup_row.clearfix
+        = f.label(:location ,:class => 'title_name')
+        .popup_fild
+          .selectbox5
+            = select_tag(:location2, options_from_collection_for_select(Location.active, :id, :name, @campaign_location && @campaign_location != "" ? @campaign_location.id : ""), :prompt => "Select Location", :onchange => @campaign.new_record? ? "getStores(this.value, 'get_campaign_stores')" : "getStores(this.value, 'get_campaign_stores', #{@campaign.id})", :class=>'select1')
+            /= select_tag(:location, options_from_collection_for_select(Location.active, :id, :name), :prompt => "Select location", :onchange => "getStores(this.value)", :class=>'select1')
+            / = select(:location, :location_id ,Location.active.collect {|l| [l.name, l.id]},{:include_blank => "Select location"}, {:class=>'select1'})
+            = link_to "Add", new_location_path(:flag => "Campaign"), :class => "add_btn fancybox fancybox.ajax"
+      #stores
+        - if !@campaign.new_record? && @campaign_location && @campaign_location != ""
+          .popup_row.clearfix
+            = f.label :store,'Store*', :class=>'title_name'
+            .selectbox5
+              = f.select(:store_id, options_from_collection_for_select(@stores, :id, :name, @campaign_store ? @campaign_store.id : ""),{:include_blank=> 'Select store'}, :class=> 'select1', :onchange => "getBeacons(this.value, 'div_beacons', 'campaigns')")
+              = link_to "Add", new_store_path(:flag => "Campaign"), :class => "add_btn fancybox fancybox.ajax"
+      #div_beacons
+        - if !@campaign.new_record? && @campaign_location && @campaign_location != ""
+          .popup_row.clearfix
+            = f.label :beacon,'Beacon*', :class=>'title_name'
+            .popup_fild
+              .selectbox5
+                = f.select(:ibeacon_id, options_from_collection_for_select(@beacons, :id, :name, @campaign_beacon ? @campaign_beacon.id : ""),{:include_blank=> 'Select Beacon'}, :class=> 'select1')
+      .popup_row.clearfix
+        = f.label :category,'Category*', :class=>'title_name'
+        .popup_fild
+          .selectbox5
+            = f.select(:category_id, Category.all.active.collect { |c| [c.name, c.id] }, {:include_blank=> 'Select Category'}, {:class=>"select1"})
+          .uploadbtn
+            = link_to "Add", new_category_path(:flag => "Campaign"), :class => "add_browser fancybox fancybox.ajax"
+      .popup_row.clearfix
+        = f.label :sound, :class=>'title_name'
+        .popup_fild
+          - if @audios
+            - @audios.each do |audio|
+              .soundthumb
+                %span.sound_img
+                  = image_tag ('sound_img.png')
+                %span.sound_name sound 1
+                = link_to 'Play','javascript:void(0)',:class=>'playstop',:id=>audio.id, :onclick => 'play_audio(this.id)'
+                %audio.audio_player{preload: "auto", :id=>"audio_#{audio.id}"}
+                  %source{src:audio.attachment_audio(:original), type: "audio/wav"}
+            .uploadbtn{:style => "top:44px;"}
+      .popup_row.clearfix
+        .title_name Add Sound
+        .popup_fild
+          .browsefild
+            = f.file_field(:attachment_audio, :class=>"file", :id=>'bfile')
+
+      .popup_row.clearfix
+        = f.label :beacon_range, 'Beacon Range*', :class=>'title_name'
+        .popup_fild
+          .checkbox_list
+            .checktext
+            = f.collection_check_boxes :beacon_range_ids, BeaconRange.active, :id, :name, {}, {:class=>'checkbox'}
+          .checkbox_list
+            %input#beacon_range_all.checkbox{:type => "checkbox"}
+            %span.checktext All
+
+      .popup_row.clearfix
+        %label.title_name Status
+        .popup_fild.switch
+          %label.status_active.selected
+            %span Active
+          %label.status
+            %span Inactive
+            = f.check_box :is_active,:class=>'checkbox'
+
+      .popup_row.clearfix
+        %label.title_name Templates*
+        .popup_fild2
+          %div#tabsholder
+            %ul.tabs
+              %li#tab1 My Template
+              %li#tab2 Store
+            %div{:class => "contents marginbot clearfix"}
+              %div{:class => "tabscontent clearfix", :id=>'content1'}
+                %div{:class => "templatelist clearfix"}
+                  - if @my_campaign_templates && @my_campaign_templates.count > 0
+                    %ul.clearfix{:id=>"ul_my_template"}
+                      - @my_campaign_templates.each do |my_template|
+                        %li{:id=>"my_template_#{my_template.id}", :style=>"width: 170px;"}
+                          = link_to ''
+                          %span.template_img
+                          = image_tag my_template.attachment(:small)
+                          %span.template_name #{TemplateMaster.find(my_template.attachable_id).header_text}
+                          = f.radio_button(:template_master_ids, my_template.id, :onclick => "make_active(this.value, 'my_template_')", :checked => (@template_attach_id == my_template.id || @campaign.new_record?) ? "checked" : "")
+
+                    = link_to "Add New",'#',:class=>'add_btnnew'
+              %div{:class => "tabscontent clearfix", :id=>'content2'}
+                %div{:class => "templatelist clearfix"}
+                  - if @store_templates
+                    %ul.clearfix{:id=>"ul_store_template"}
+                      - @store_templates.each do |store_template|
+                        %li{:id=>"store_template_#{store_template.id}", :style=>"width: 170px;"}
+                          = link_to ''
+                          %span.template_img
+                          = image_tag store_template.attachment(:small)
+                          %span.template_name #{TemplateMaster.find(store_template.attachable_id).header_text}
+                          = f.radio_button(:template_master_ids, store_template.id, :onclick => "make_active(this.value, 'store_template_')", :checked => (@template_id == store_template.id) ? "checked" : "")
+                  = link_to "Add New",'#',:class=>'add_btnnew'
+
+      #datetimepicker.popup_row.clearfix{style: "display:none;"}
+        = f.label :schedule, :class=>'title_name'
+        .pop-up_fild
+          = f.text_field :schedule_from, :class=>'textbox2 boxw180',:id => 'schedule_from', :placeholder=>'From'
+          = f.text_field :schedule_to, :class=>'textbox2 boxw180', :id => 'schedule_to',:placeholder=>'To'
+          %span{style: "display:none;color:#C9E3F6;font-size: 15px;"} Enter a Valid Date
+    .iphonefram.mar0
+      .displayimg
+        - unless @camp_template.blank?
+          = image_tag @camp_template[0].attachment, :id => "image1",:style=> "margin-top: -132px; width: 269px; height: 478px;"
+        - else
+          = image_tag @my_campaign_templates.last.attachment(:original), :id => "image1",:style=> "margin-top: -132px; width: 269px; height: 478px;"
+
+    .popup_row.button_wrapper2
+      = f.submit "Save", :class=>'blue_btn', :id => 'savef', onclick: "return frm_validate_campaign()"
+      = link_to "Schedule", 'javascript:;',:id=> 'clickHere', :class=>'blue_btn'
+      = link_to 'Cancel', campaigns_path,:class=>'blue_btn'
+
+:javascript
+  function make_active(li_id, li_name){
+    $('#ul_my_template li').removeClass('active')
+    $('#ul_store_template li').removeClass('active')
+    $('#'+li_name+li_id).attr('class', 'active')
+  }
+
+  $('#beacon_range_all').click(function () {
+      if ($(this).is(':checked')) {
+        $('#campaign_beacon_range_ids_1, #campaign_beacon_range_ids_2, #campaign_beacon_range_ids_3').prop('checked', true);
+        $.uniform.update('#campaign_beacon_range_ids_1');
+        $.uniform.update('#campaign_beacon_range_ids_2');
+        $.uniform.update('#campaign_beacon_range_ids_3');
+      } else {
+        $('#campaign_beacon_range_ids_1, #campaign_beacon_range_ids_2, #campaign_beacon_range_ids_3').prop('checked', false);
+        $.uniform.update('#campaign_beacon_range_ids_1');
+        $.uniform.update('#campaign_beacon_range_ids_2');
+        $.uniform.update('#campaign_beacon_range_ids_3');
+      }
+  });
+  $('#campaign_beacon_range_ids_1, #campaign_beacon_range_ids_2, #campaign_beacon_range_ids_3').click(function () {
+      if ($(this).is(':checked')) {
+      } else {
+        $('#beacon_range_all').prop('checked', false);
+        $.uniform.update('#campaign_beacon_range_ids_1');
+        $.uniform.update('#campaign_beacon_range_ids_2');
+        $.uniform.update('#campaign_beacon_range_ids_3');
+      }
+  });
+  $('img').click(function()
+    {
+      var nameA = $(this).attr('src');
+      var array = nameA.split("/");
+      array[7] = "original";
+      var new_url = array.join("/")
+      document.getElementById('image1').src = new_url;
+    });
+   // Schedule Template div show/hide
+  var s;
+  ShowHideWidget = {
+
+  settings : {
+  clickHere : document.getElementById('clickHere'),
+  datetimepicker   : document.getElementById('datetimepicker')
+  },
+
+  init : function() {
+  s = this.settings;
+  this.bindUIActions();
+  },
+
+  bindUIActions : function() {
+  s.clickHere.onclick = function() {
+  ShowHideWidget.toggleVisibility(s.datetimepicker);
+  };
+  },
+
+  toggleVisibility : function(id) {
+  if(id.style.display == 'block') {
+  id.style.display = 'none';
+  } else {
+  id.style.display = 'block';
+  };
+  }
+
+  };
+
+  (function() {
+  ShowHideWidget.init();
+  })();
+
+  //
+  function play_audio(audio_id){
+
+     $('#'+audio_id).text(function(i,v) {
+          if (v=='Play'){
+           $('#audio_'+ audio_id)[0].currentTime = 0;
+           $('#audio_'+ audio_id)[0].play();
+          }
+          else{
+           $('#audio_'+ audio_id)[0].pause();
+          }
+     return v == 'Play' ? 'Stop' : 'Play';
+    });
+  }
+
+

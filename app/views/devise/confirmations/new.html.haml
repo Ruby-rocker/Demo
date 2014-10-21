@@ -1,0 +1,16 @@
+/ %h2 Resend confirmation instructions
+= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
+	= devise_error_messages!
+	.login_box
+		.sign_in
+			Resend confirmation instructions
+		%br
+		.sign_in
+			= f.label :login
+		.iconrow
+			%span.emailicon
+			= f.text_field :login, :class => "textbox", placeholder: "rob@abc.com"
+		.formrow.clearfix
+			%div= f.submit "Resend confirmation instructions", :class => "submitbtn"
+		.formrow.clearfix
+			= render "devise/shared/links"

@@ -1,0 +1,128 @@
+.dragbox.autodiv
+  .drag_head
+    %h2 Rules
+    = form_for @campaign_rule,  html: {id: :frm_campaign_rule, :onsubmit => 'return chk_frm_campaign_rule()'} do |f|
+      .innerpage.clearfix
+      .store_row.clearfix
+        .heat_row.clearfix
+          .heat_name
+            .popup_row.clearfix.setListbox
+              .popup_fild
+                .selectbox5
+                  = select_tag(:store, options_from_collection_for_select(@stores, :id, :name, @current_store), :prompt => "Select Store", :class=>'select1', :onchange => "getBeacons(this.value, 'div_beacons', 'campaign_rules')")
+            #div_beacons.setListbox
+              .popup_fild
+                .selectbox5
+                  = select_tag(:beacon_id, options_from_collection_for_select(@beacons, :id, :name, @current_beacon), :prompt => "Select Beacon", :class=>'select1', :onchange => 'getCampaigns(this.value)')
+            #div_campaigns.setListbox
+              .popup_fild
+                .selectbox5
+                  = f.select(:campaign_id, options_from_collection_for_select(@campaigns, :id, :title, (@current_campaign.id rescue '')), {:prompt => "Select Campaign"}, :class=>'select1', :onchange => 'showRules(this.value)')
+      #div_show_rules
+        .store_row.clearfix
+          .storename Welcome Message
+          .button_right
+          .heat_list.clearfix
+            .heat_row.clearfix
+              .heat_name.ruleLabel Delay second time welcome message by
+              .popup_fild
+                .selectbox5.ruleDivTime
+                  = f.select(:second_welcome_min, options_for_select(DELAY_MIN.collect {|t| [ t.last, t.first ]}, (@campaign_rule.second_welcome_min rescue 0)), {:include_blank => 'Minute'}, class: 'select1')
+                .selectbox5.ruleDivTime
+                  = f.select(:second_welcome_hour, options_for_select(DELAY_HOUR.collect {|t| [ t.last, t.first ] }, (@campaign_rule.second_welcome_hour rescue 0)), {:include_blank => 'Hour'}, class: 'select1')
+        .store_row.clearfix
+          .storename Message Delay
+          .button_right
+          .heat_list.clearfix
+            .heat_row.clearfix
+              .heat_name.ruleLabel Delay message delivery by
+              .popup_fild
+                .selectbox5.ruleDivTime
+                  = f.select(:message_delay_second, options_for_select(DELAY_MIN.collect {|t| [ t.last, t.first ] }, (@campaign_rule.message_delay_second rescue 0)),{include_blank: 'Second'}, class: 'select1')
+                .selectbox5.ruleDivTime
+                  = f.select(:message_delay_min, options_for_select(DELAY_MIN.collect {|t| [ t.last, t.first ] }, (@campaign_rule.message_delay_min rescue 0)),{include_blank: 'Minute'}, class: 'select1')
+                .selectbox5.ruleDivTime
+                  = f.select(:message_delay_hour, options_for_select(DELAY_HOUR.collect {|t| [ t.last, t.first ] }, (@campaign_rule.message_delay_hour rescue 0)),{include_blank: 'Hour'}, class: 'select1')
+
+        .store_row.clearfix
+          .storename Limits
+          .button_right
+          .heat_list.clearfix
+            .heat_row.clearfix
+              .heat_name.ruleLabel Do not send more than
+              %div{:style => 'float: left;'}
+                .selectbox5.ruleDivTime
+                  = f.select(:campaign_limit_message, options_for_select(DELAY_MIN.collect {|t| [ t.last, t.first ] }, (@campaign_rule.campaign_limit_message rescue 0)),{include_blank: 'Message'}, class: 'select1')
+                .heat_name{:style => 'margin-right: 10px;'} messages within
+                .selectbox5.ruleDivTime
+                  = f.select(:campaign_limit_second, options_for_select(DELAY_MIN.collect {|t| [ t.last, t.first ] }, (@campaign_rule.campaign_limit_second rescue 0)),{include_blank: 'Second'}, class: 'select1', :onchange => 'disable_limit_campaigns(this.id, this.value)')
+                .selectbox5.ruleDivTime
+                  = f.select(:campaign_limit_min, options_for_select(DELAY_MIN.collect {|t| [ t.last, t.first ] }, (@campaign_rule.campaign_limit_min rescue 0)),{include_blank: 'Minute'}, class: 'select1', :onchange => 'disable_limit_campaigns(this.id, this.value)')
+                .selectbox5.ruleDivTime
+                  = f.select(:campaign_limit_hour, options_for_select(DELAY_HOUR.collect {|t| [ t.last, t.first ] }, (@campaign_rule.campaign_limit_hour rescue 0)),{include_blank: 'Hour'}, class: 'select1', :onchange => 'disable_limit_campaigns(this.id, this.value)')
+                .selectbox5.ruleDivTime
+                  = f.select(:campaign_limit_days, options_for_select(DELAY_DAYS.collect {|t| [ t.last, t.first ] }, (@campaign_rule.campaign_limit_days rescue 0)),{include_blank: 'Days'}, class: 'select1', :onchange => 'disable_limit_campaigns(this.id, this.value)')
+        .store_row.clearfix
+          .storename Deactivate Campaigns
+          .button_right
+          .heat_list.clearfix
+            .heat_row.clearfix
+              .heat_name.ruleLabel Deactivate campaign after
+              .popup_fild
+                .selectbox5.ruleDivTime
+                  = f.select(:deactivate_campaign, options_for_select(DELAY_DAYS.collect {|t| [ t.last, t.first ] }, (@campaign_rule.deactivate_campaign rescue 0)),{include_blank: 'Days'}, class: 'select1'  )
+
+          .popup_row.button_wrapper2
+            = f.submit "Create Rule", :class=>'blue_btn'
+
+
+:javascript
+  function disable_limit_campaigns(list_id, list_value){
+    if(!list_value){
+      if(list_id=='campaign_limit_second' && (!returnValue('campaign_limit_min') && !returnValue('campaign_limit_hour')) ||
+        list_id=='campaign_limit_min' && (!returnValue('campaign_limit_second') && !returnValue('campaign_limit_hour')) ||
+        list_id=='campaign_limit_hour' && (!returnValue('campaign_limit_min') && !returnValue('campaign_limit_second'))){
+        $("#uniform-campaign_limit_days").css({ display: "block" });
+        $("#campaign_limit_days").css({ display: "block" });
+
+        $("#uniform-campaign_limit_second").css({ display: "none" });
+        $("#uniform-campaign_limit_min").css({ display: "none" });
+        $("#uniform-campaign_limit_hour").css({ display: "none" });
+        $("#campaign_limit_second").css({ display: "none" });
+        $("#campaign_limit_min").css({ display: "none" });
+        $("#campaign_limit_hour").css({ display: "none" });
+      } else if(list_id=='campaign_limit_days' && !returnValue('campaign_limit_days')) {
+        $("#uniform-campaign_limit_days").css({ display: "none" });
+        $("#campaign_limit_days").css({ display: "none" });
+
+        $("#uniform-campaign_limit_second").css({ display: "block" });
+        $("#uniform-campaign_limit_min").css({ display: "block" });
+        $("#uniform-campaign_limit_hour").css({ display: "block" });
+        $("#campaign_limit_second").css({ display: "block" });
+        $("#campaign_limit_min").css({ display: "block" });
+        $("#campaign_limit_hour").css({ display: "block" });
+      }
+    }
+    if(list_value && (list_id=='campaign_limit_second' || list_id=='campaign_limit_min' || list_id=='campaign_limit_hour')){
+      $("#uniform-campaign_limit_days").css({ display: "none" });
+      $("#campaign_limit_days").css({ display: "none" });
+
+      $("#uniform-campaign_limit_second").css({ display: "block" });
+      $("#uniform-campaign_limit_min").css({ display: "block" });
+      $("#uniform-campaign_limit_hour").css({ display: "block" });
+      $("#campaign_limit_second").css({ display: "block" });
+      $("#campaign_limit_min").css({ display: "block" });
+      $("#campaign_limit_hour").css({ display: "block" });
+    }
+    if(list_value && list_id=='campaign_limit_days'){
+      $("#uniform-campaign_limit_days").css({ display: "block" });
+      $("#campaign_limit_days").css({ display: "block" });
+
+      $("#uniform-campaign_limit_second").css({ display: "none" });
+      $("#uniform-campaign_limit_min").css({ display: "none" });
+      $("#uniform-campaign_limit_hour").css({ display: "none" });
+      $("#campaign_limit_second").css({ display: "none" });
+      $("#campaign_limit_min").css({ display: "none" });
+      $("#campaign_limit_hour").css({ display: "none" });
+    }
+  }

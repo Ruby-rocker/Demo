@@ -1,0 +1,50 @@
+= javascript_include_tag 'jquery.accordion.custom', 'data-turbolinks-track' => true
+
+= stylesheet_link_tag    'demo2'
+= form_for :location , :url => remove_multiple_location_path, :html=>{:id=>'frm9'}do |f|
+  .user_details.clearfix
+    %h3
+      = link_to 'New Location', new_location_path, :class=>'blue_btn'
+    .selectbox.blueselect.frd
+      = f.select(:name, [['Delete', 'delete'], ['Change Status', 'changestatus']],{:include_blank=> 'Select Action'},{:class=>'select1'})
+      = f.submit 'Submit', :class=>'blue_btn'
+
+    %label.actionlabel Actions
+  .div{:style => "clear: both;"}
+  #cssmenu
+    %ul
+      - @locations.each do |location|
+        %li.has-sub
+          .checkbox_list.checktext
+            = check_box('location[chk_ids]', location.id, :class=>'checkbox')
+          %a{href: "#"}
+            = location.name
+          - unless location.stores.blank?
+            %ul.secondlabel
+              - location.stores.each do |store|
+                %li.has-sub
+                  .checkbox_list.checktext
+                    = check_box('store[chk_ids]', store.id, :class=>'checkbox')
+                  %a{href: "#"}
+                    = store.name
+                  - unless store.ibeacons.blank?
+                    %ul
+                      - store.ibeacons.each do |ibeacon|
+                        %li.contant_section
+                          .checkbox_list.checktext
+                            = check_box('ibeacon[chk_ids]', ibeacon.id, :class=>'checkbox')
+                          %p
+                            = ibeacon.name
+                            .accodion_img
+                              %img{alt: "", height: "960", src: "ikea-map.jpg", width: "640"}
+
+
+:javascript
+  $('#frm9').submit(function(event){
+    var valDDL = $('#location_name').val();
+    if(valDDL=="")
+      {
+        event.preventDefault();
+        alert("Select an Action");
+      }
+  }); 

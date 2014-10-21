@@ -1,0 +1,7 @@
+= javascript_include_tag 'myfunction', 'data-turbolinks-track' => true
+= javascript_include_tag 'tab', 'data-turbolinks-track' => true
+= javascript_include_tag 'jquery.uniform.min', 'data-turbolinks-track' => true
+
+.selectbox5
+  = select(:ibeacon, :store_id, options_from_collection_for_select(@stores, :id, :name, @ibeacon_store),{:prompt=> 'Select store'},{:class=> 'select1'})
+  = link_to "Add", new_store_path(:flag => "Ibeacon", :loc_id => @location_id), :class => "add_btn fancybox fancybox.ajax", :id=>'add_store'

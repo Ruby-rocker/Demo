@@ -1,0 +1,16 @@
+.user_details.clearfix
+  %h2 Beacon Range's Details
+  %hr
+  .innerpage2.clearfix
+    %p#notice= notice
+    .popup_row.clearfix
+      %p
+        %b Name :
+        = @beacon_range.name
+      %br/
+      %p
+        %b Status:
+        = @beacon_range.isactive
+      %br/
+    = link_to 'Edit', edit_beacon_range_path(@beacon_range),:class=>'blue_btn'
+    = link_to 'Back', beacon_ranges_path,:class=>'blue_btn'

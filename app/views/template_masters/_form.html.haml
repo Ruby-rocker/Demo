@@ -1,0 +1,75 @@
+%div{:class=>"dragbox autodiv"}
+  .drag_head
+    %h2 Template Master
+    -#.drag_btn
+    -#  %a{:href => "#"}
+  %div{:class=>"innerpage2 clearfix"}
+    .template_form
+      = form_for @template_master, html: {id: :frm_save_template}, :multipart => true do |f|
+        .popup_content
+          - if @template_master.errors.any?
+            #error_explanation
+              %h2
+                = pluralize(@template_master.errors.count, "error")
+                prohibited this role from being saved:
+              %ul
+                - @template_master.errors.full_messages.each do |message|
+                  %li= message
+        .popup_row.clearfix
+          = f.label(:template_name, 'Template Name*', :class => "title_name")
+          .popup_fild
+          = f.text_field(:name, :class=>"textbox2 boxw360")
+        .popup_row.clearfix
+          = f.label(:image , :class => "title_name")
+          .popup_fild
+            .browsefild
+              = f.file_field(:attachment, :class=>"file", :id=>'bfile')
+              - if @image.present?
+                = image_tag @image.attachment(:small)
+        .popup_row.clearfix
+          = f.label(:icon , :class => "title_name")
+          .popup_fild
+            .browsefild
+              = f.file_field(:attachment_icon, :class=>"file")
+              - if @image.present?
+                = image_tag @image.attachment_icon(:small)
+        .popup_row.clearfix
+          = f.label(:header_text , :class => "title_name")
+          .popup_fild
+            = f.text_field(:header_text,:class=>"textbox2 boxw228")
+        .popup_row.clearfix
+          = f.label(:amount , :class => "title_name")
+          .popup_fild
+            = f.text_field(:amount,:class=>"textbox2 boxw228")
+        .popup_row.clearfix
+          = f.label(:description , :class => "title_name")
+          .popup_fild
+            = f.text_area(:description, rows: 5,:class=>"textbox2 boxw360", :placeholder=>"up to 42 characters")
+        .popup_row.clearfix
+          = f.label(:coupon_code, 'Coupon Code', :class => "title_name")
+          .popup_fild
+            = f.text_field(:coupon_code,:class=>"textbox2 boxw228", :placeholder=>"if any")
+        .popup_row.clearfix
+          %label.title_name Status
+          .popup_fild.switch
+            %label.status_active.selected
+              %span Active
+            %label.status
+              %span Inactive
+              = f.check_box :is_active,:class=>'checkbox' 
+        .popup_row.clearfix
+          %label.title_name
+          .popup_fild
+            = f.submit 'save',:class=> 'blue_btn', onclick: "return frm_validate_template()"
+            = link_to "CANCEL", template_masters_path, :class=>"blue_btn"
+    .iphonefram
+      .displayimg
+        - if @image.present?
+          = image_tag @image.attachment,:id => "iphone_img",:style=> "margin-top: -132px; width: 269px; height: 478px;"
+        - else
+          = image_tag 'iphone_displayimg.jpg',:id => "iphone_img",:style=> "margin-top: -132px; width: 269px; height: 478px;"
+
+:javascript
+  $('#bfile').change( function(event){
+    $("#iphone_img").fadeIn("fast").attr('src',URL.createObjectURL(event.target.files[0]));
+  });

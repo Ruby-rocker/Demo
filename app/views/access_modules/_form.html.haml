@@ -1,0 +1,28 @@
+%div{:class=>'dragbox autodiv w922'}
+  .drag_head
+    %h2 Access Module
+    -#.drag_btn
+    -#  %a{:href => '#'}
+  %div{:class=>'innerpage2 clearfix'}
+    = form_for @access_module do |f|
+      .popup_content
+      - if @access_module.errors.any?
+        #error_explanation
+          %h2
+            = pluralize(@access_module.errors.count, "error")
+            prohibited this role from being saved:
+          %ul
+            - @access_module.errors.full_messages.each do |message|
+              %li= message
+      .popup_row.clearfix
+        = f.label :name, :class=>'title_name'
+        .popup_fild
+          = f.text_field :name
+      .popup_row.clearfix
+        = f.label :status, :class=>'title_name'
+        .popup_fild
+          .checkbox_list.checktext
+          = f.check_box :is_active,:class=>'checkbox'
+      .popup_row.button_wrapper2
+        = f.submit 'Save',:class=>'blue_btn'
+        = link_to 'Cancel', access_modules_path,:class=>'blue_btn'

@@ -1,0 +1,123 @@
+-#- if !admin_signed_in?
+-#  %p
+-#    = link_to 'Sign up', new_admin_registration_path
+-#    |
+-#    \#{link_to "Sign in", new_session_path("admin")}
+-#- else
+-#  %h1
+-#    Welcome #{@user}
+-#  = render "layouts/header"
+
+/ dragbox
+.dragbox.minhight460.w922.fld
+  .drag_head
+    %h2 User
+    -#.drag_btn
+    -#  %a{:href => "#"}
+    = link_to 'Add User', new_admin_registration_path, :class => "adduser"
+  = render "devise/registrations/all_admins"
+/ dragbox
+/ dragbox
+.dragbox.minhight460.w261.frd
+  .drag_head
+    %h2 Location
+    -#.drag_btn
+    -#  %a{:href => "#"}
+  = render "location"
+/ dragbox
+.drag_row
+  / dragbox
+  .dragbox.fld
+    .drag_head
+      %h2 Beacon
+      -#.drag_btn
+      -#  %a{:href => "#"}
+      - if can? :crud, Ibeacon
+        = link_to 'Add Beacon', new_ibeacon_path, :class => "adduser"
+    .dragbox_content.clearfix
+      .box_row.clearfix.foribeacon
+        .fildbox
+          %label.username Name
+          %input.textbox2{:type => "text"}/
+        .fildbox
+          %label.username UUID
+          .selectbox2
+            %select.select1
+              %option Select Status
+              %option Test
+              %option Test2
+        .fildbox
+          %label.username Major
+          %input.textbox2{:type => "text"}/
+        .fildbox
+          %label.username Minor
+          %input.textbox2{:type => "text"}/
+        .fildbox
+          %label.username Status
+          .selectbox2
+            %select.select1
+              %option Status
+              %option Test
+              %option Test2
+        .fildbox
+          %label.username Location
+          %input.textbox2{:type => "text"}/
+      .box_row.clearfix.foribeacon
+        .fildbox.calander_wrapper
+          %label.username Installation From Date
+          %input.textbox2{:type => "text"}/
+          %a.calander_icon{:href => "#"}
+        .fildbox.calander_wrapper
+          %label.username Installation To Date
+          %input.textbox2{:type => "text"}/
+          %a.calander_icon{:href => "#"}
+        .fildbox
+          %label.username &nbsp;
+          %input.blue_btn.frd.w180{:type => "submit", :value => "Search"}/
+        .fildbox
+          %label.username &nbsp;
+          %input.blue_btn.frd.w180{:type => "submit", :value => "Cancel"}/
+      = render 'ibeacons/dash'
+  / dragbox
+.drag_row
+  / dragbox
+  .dragbox.fld
+    .drag_head
+      %h2 Campaign
+      -#.drag_btn
+      -#  %a{:href => "#"}
+      - if can? :crud, Campaign
+        = link_to 'Add Campaign', new_campaign_path, :class => "adduser"
+    .dragbox_content.clearfix
+      .box_row.clearfix.foribeacon
+        .fildbox
+          %label.username Name
+          %input.textbox2{:type => "text"}/
+        .fildbox
+          %label.username Category
+          .selectbox2
+            %select.select1
+              %option Select Category
+              %option Test
+              %option Test2
+        .fildbox
+          %label.username iBeacon
+          .selectbox2
+            %select.select1
+              %option Select iBeacon
+              %option Test
+              %option Test2
+        .fildbox
+          %label.username Status
+          .selectbox2
+            %select.select1
+              %option Select Status
+              %option Test
+              %option Test2
+        .fildbox
+          %label.username &nbsp;
+          %input.blue_btn.frd.w180{:type => "submit", :value => "Search"}
+        .fildbox
+          %label.username &nbsp;
+          %input.blue_btn.frd.w180{:type => "submit", :value => "Cancel"}
+      = render ('campaigns/dash')

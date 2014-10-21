@@ -1,0 +1,94 @@
+%div{:class=>'dragbox autodiv w922'}
+  .drag_head
+    %h2 Create User
+    -#.drag_btn
+    -#  %a{:href => '#'}
+  %div{:class=>'innerpage2 clearfix'}
+    = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+      .popup_content
+        = devise_error_messages!
+        .popup_row.clearfix
+          = f.label(:name , :class => 'title_name')
+          .popup_fild
+            .selectbox3
+              = f.select(:title_id, Title.all.collect { |t| [t.name, t.id] }, {:include_blank=> 'Select'}, {:class=>'select1'})
+            = f.text_field :first_name, :placeholder => 'First Name', :class => 'textbox2 boxw130'
+            = f.text_field :middle_name, :placeholder => 'Middle Name', :class => 'textbox2 boxw130'
+            = f.text_field :last_name, :placeholder => 'Last Name', :class => 'textbox2 boxw130'
+            = f.text_field :suffix, :placeholder => 'Suffix', :class => 'textbox2 boxw80'
+        .popup_row.clearfix
+          = f.label(:store_name , :class => 'title_name')
+          .popup_fild
+            .selectbox5
+              = f.select(:store_id, Store.all.active.collect { |s| [s.name, s.id] }, {:include_blank=> 'Select Store'}, {:class=>'select1'})
+              -#= link_to 'Add', new_store_path, :class=> 'add_btn', :target=>'_blank'
+              = link_to 'Add', new_store_path(:flag => "Admin", :form_type => "new"), :class => "add_btn fancybox fancybox.ajax"
+        %div{:class => 'popup_row clearfix'}
+          = f.label :username, :class=>'title_name'
+          = f.text_field :username, :class => 'textbox2 boxw360'
+        %div{:class => 'popup_row clearfix'}
+          = f.label :email, :class=>'title_name'
+          = f.email_field :email, :class => 'textbox2 boxw360'
+        %div{:class => 'popup_row clearfix'}
+          = f.label :upload_Photo, :class=>'title_name'
+          .popup_fild
+            .browsefild
+              = f.file_field(:attachment, :class=>'file')
+        %div{:class => 'popup_row clearfix'}
+          = f.label :date_of_birth, :class=>'title_name'
+          .popup_fild
+            .selectbox3          
+              = f.text_field :dob, :as => :date_picker, :class => 'datepicker select1 textbox2 boxw180', :placeholder => 'Select Birthdate'
+        %div{:class => 'popup_row clearfix'}
+          = f.label :admin_Type, :class=>'title_name'
+          .popup_fild
+            .selectbox3
+              = f.select(:admin_type, [['Admin', 'admin'], ['User', 'user']], {:prompt=> 'Select Type'},{:class=>'select1',:style=> 'opacity:0;'})
+        %div{:class => 'popup_row clearfix'}
+          = f.label :role, :class=>'title_name'
+          .popup_fild
+            .selectbox3
+              = select_tag(:role_id, options_from_collection_for_select(Role.active, 'id', 'name'),{:class=>'select1',:style=> 'opacity:0;'})
+        %div{:class => 'popup_row clearfix'}
+          = f.label(:gender,:class => 'title_name')
+          .popup_fild
+            .selectbox3
+              = f.select(:gender, [['Male', true], ['Female', false]],{:include_blank=> 'Select'},{:class=>'select1',:style=>'opacity: 0;'})
+        %div{:class => 'popup_row clearfix'}
+          = link_to('New Address', '#')
+          = f.label(:address,:class => 'title_name')
+          = f.fields_for @address do |f_adr|
+            .popup_fild
+              = f_adr.text_field :street, :class => 'textbox2 marb7 boxw608', :placeholder => 'Address Line 1'
+              = f_adr.text_field :suit, :class => 'textbox2 marb7 boxw608', :placeholder => 'Address Line 2'
+              = f_adr.text_field :city, :class => 'textbox2 marb7 boxw300', :placeholder => 'City'
+              = f_adr.text_field :zip_code, :class => 'textbox2 marb7 boxw300', :placeholder => 'Zip Code'
+              .selectbox4
+                = f_adr.select(:country, Country.all, {:include_blank =>'Select Country'}, {:class=>'select1',:style=> 'opacity:0;', :onchange => 'get_states(this.value)'})
+              #states
+        %div{:class => 'popup_row clearfix'}
+          = f.label(:phone_information,:class=> 'title_name')
+          .popup_fild
+            = f.text_field(:mobile_no, :class=>'textbox2 marb7 boxw300', :placeholder =>'Mobile Number')
+            = f.text_field(:landline_no, :class=>'textbox2 boxw300 clear', :placeholder =>'Land Line Number')
+        %div{:class => 'popup_row clearfix'}
+          = f.label(:status,:class=> 'title_name')
+          .popup_fild
+            .radiofild
+              = f.radio_button(:is_active,'yes',:checked => true)
+              = f.label(:active)
+            .radiofild
+              = f.radio_button(:is_active,'no')
+              = f.label(:inactive)
+        .button_wrapper
+          = f.submit(:class=>'blue_btn w180')
+
+          = link_to('Cancel',root_path, :class=>'blue_btn w180')
+:javascript
+  $(document).ready(function() {
+    $('#admin_dob').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '-70:-18'
+    });
+  });

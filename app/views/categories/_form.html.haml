@@ -1,0 +1,55 @@
+= javascript_include_tag 'myfunction', 'data-turbolinks-track' => true
+
+%div{:class=>'dragbox autodiv w922'}
+  .drag_head
+    %h2 Category
+    -#.drag_btn
+    -#  %a{:href => '#'}
+  %div{:class=>'innerpage2 clearfix'}
+    = form_for @category, html: {id: :frm_save_category} do |f|
+      = hidden_field_tag(:flag, params[:flag])
+      - if @category.errors.any?
+        #error_explanation
+          %h2
+            = pluralize(@category.errors.count, "error")
+            prohibited this role from being saved:
+          %ul
+            - @category.errors.full_messages.each do |message|
+              %li= message
+      .popup_row.clearfix
+        = f.label :name, :class=>'title_name'
+        .popup_fild
+          = f.text_field :name, :class=>'textbox2 boxw290'
+      .popup_row.clearfix
+        %label.title_name Status:
+        .popup_fild.switch
+          %label.status_active.selected
+            %span Active
+          %label.status
+            %span Inactive
+            = f.check_box :is_active,:class=>'checkbox'
+      .popup_row.button_wrapper2
+        = f.submit 'Save', :class=>'blue_btn', onclick: "return frm_validate_category()"
+        = link_to 'Back', "javascript: $.fancybox.close();", :class=>'blue_btn'
+:javascript
+(function () {
+  $(".status input[type=hidden]").val('1');
+    $(".status_active").click(function(){
+      var parent = $(this).parents('.switch');
+      $('.status',parent).removeClass('selected');
+      $(this).addClass('selected');
+      $(".checkbox").attr('checked', true)
+      $('#ibeacon_is_active',parent).attr('checked', true);
+      $('#ibeacon_is_active',parent).attr('value', '1');
+      $(".status input[type=hidden]").val('1');
+    });
+    $(".status").click(function(){
+      var parent = $(this).parents('.switch');
+      $('.status_active',parent).removeClass('selected');
+      $(this).addClass('selected');
+      $('.checkbox').removeAttr('checked')
+      $('#ibeacon_is_active',parent).attr('checked', false);
+      $('#ibeacon_is_active',parent).attr('value', '0');
+      $(".status input[type=hidden]").val('0');
+    });
+});

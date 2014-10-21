@@ -1,0 +1,14 @@
+= javascript_include_tag 'myfunction', 'data-turbolinks-track' => true
+
+%div{:class=>'dragbox autodiv w922'}
+  .drag_head
+    %h2 Add Audio:
+  %div{:class=>'innerpage2 clearfix'}
+    = form_for :audio_form,:url => {:controller => :campaigns, :action => :create_audio}, :html => {:method => :post, :id => 'upload_audio', :multipart => true} do |f|
+      = f.hidden_field(:campaign_id, :value => params[:campaign_id])
+      .popup_row.clearfix
+        = f.label(:upload_audio, 'Upload Audio', :class => "title_name")
+        .popup_fild
+          .browsefild
+            = f.file_field(:upload_audio, :class=>"file")
+      = f.submit 'Save', :class=>'blue_btn'

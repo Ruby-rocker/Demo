@@ -1,0 +1,41 @@
+.user_details.clearfix
+  %h2 Contact's Details
+  %hr
+  .innerpage2.clearfix
+    %p#notice= notice
+    .popup_row.clearfix
+      %p
+        %b UUID :
+        = @contact.uuid
+      %br/
+      %p
+        %b UDID :
+        = @contact.udid
+      %br/
+      %p
+        %b First Name :
+        = @contact.first_name
+      %br/
+      %p
+        %b Last Name :
+        = @contact.last_name
+      %br/
+      %p
+        %b Email Address :
+        = @contact.email_address
+      %br/
+      %p
+        %b Contact No :
+        = @contact.contact_no
+      %br/
+      %p
+        %b Latitude :
+        = @contact.latitude
+      %br/
+      %p
+        %b Longitude :
+        = @contact.longitude
+      %br/
+
+    = link_to 'Edit', edit_contact_path(@contact),:class=>'blue_btn'
+    = link_to 'Back', contacts_path,:class=>'blue_btn'

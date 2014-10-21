@@ -1,0 +1,63 @@
+= javascript_include_tag 'myfunction', 'data-turbolinks-track' => true
+= javascript_include_tag 'fancybox', 'data-turbolinks-track' => true
+= javascript_include_tag 'tab', 'data-turbolinks-track' => true
+= javascript_include_tag 'jquery.uniform.min', 'data-turbolinks-track' => true
+
+%div{:class=>"dragbox autodiv w922"}
+  .drag_head
+    %h2 Add Store
+    -#.drag_btn
+    -#  %a{:href => "#"}
+  %div{:class=>"innerpage2 clearfix"}
+    = form_for @store, html: {id: :frm_save_store} do |f|
+      = hidden_field_tag(:flag, params[:flag])
+      = hidden_field_tag(:loc_id, params[:loc_id])
+      = hidden_field_tag(:form_type, params[:form_type])
+      .popup_content
+        - if @store.errors.any?
+          #error_explanation
+            %h2= "#{pluralize(@store.errors.count, "error")} prohibited this location from being saved:"
+            %ul
+              - @store.errors.full_messages.each do |msg|
+                %li= msg
+        .popup_row.clearfix        
+          = f.label(:name ,:class => 'title_name')
+          .popup_fild
+            = f.text_field :name, :class => 'textbox2 boxw180'
+        .popup_row.clearfix        
+          = f.label(:location ,:class => 'title_name')
+          .popup_fild
+            .selectbox5
+              = f.select :location_id , Location.active.collect {|l| [l.name, l.id]}, {:selected => params[:loc_id]},{:class=>'select1'}
+        .popup_row.clearfix
+          %label.title_name Status:
+          .popup_fild.switch
+            %label.status_active.selected
+              %span Active
+            %label.status
+              %span Inactive
+              = f.check_box :is_active,:class=>'checkbox'
+          .popup_row.button_wrapper2
+            = f.submit 'Save', :class=>"blue_btn", onclick: "return frm_validate_store()"
+:javascript
+(function () {
+  $(".status input[type=hidden]").val('1');
+    $(".status_active").click(function(){
+      var parent = $(this).parents('.switch');
+      $('.status',parent).removeClass('selected');
+      $(this).addClass('selected');
+      $(".checkbox").attr('checked', true)
+      $('#ibeacon_is_active',parent).attr('checked', true);
+      $('#ibeacon_is_active',parent).attr('value', '1');
+      $(".status input[type=hidden]").val('1');
+    });
+    $(".status").click(function(){
+      var parent = $(this).parents('.switch');
+      $('.status_active',parent).removeClass('selected');
+      $(this).addClass('selected');
+      $('.checkbox').removeAttr('checked')
+      $('#ibeacon_is_active',parent).attr('checked', false);
+      $('#ibeacon_is_active',parent).attr('value', '0');
+      $(".status input[type=hidden]").val('0');
+    });
+});

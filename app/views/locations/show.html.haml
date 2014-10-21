@@ -1,0 +1,20 @@
+.user_details.clearfix
+  %h2 Location's Details
+  %hr
+  .innerpage2.clearfix
+    %p#notice= notice
+    .popup_row.clearfix
+      %p
+        %b Name:
+        = @location.name
+      %br/
+      %p
+        %b Zipcode:
+        = @location.zipcode
+      %br/
+      %p
+        %b Status:
+        = @location.isactive
+      %br/
+    = link_to 'Edit', edit_location_path(@location),:class=>'blue_btn'
+    = link_to 'Back', locations_path,:class=>'blue_btn'

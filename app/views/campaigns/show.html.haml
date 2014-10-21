@@ -1,0 +1,36 @@
+.user_details.clearfix
+  %h2 Campaign's Details
+  %hr
+  .innerpage2.clearfix
+    %p#notice= notice
+    .popup_row.clearfix
+      %p
+        %b Title:
+        = @campaign.title
+      %br/
+      %p
+        %b Name:
+        = @campaign.name
+      %br/
+      %p
+        %b Description:
+        = @campaign.description
+      %br/
+      %p
+        %b Store:
+        = @campaign.store.name
+      %br/
+      %p
+        %b Beacon:
+        = @campaign.ibeacon.name
+      %br/
+      %p
+        %b Category: 
+        = @campaign.category.name
+      %br/
+      -#%p
+      -#  %b Status:
+      -#  = @campaign.isactive
+      -#%br/
+    = link_to 'Edit', edit_campaign_path(@campaign),:class=>'blue_btn'
+    = link_to 'Back', campaigns_path,:class=>'blue_btn'

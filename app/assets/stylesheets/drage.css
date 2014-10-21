@@ -1,0 +1,85 @@
+/*@charset utf-8;*/
+@charset "utf-8";
+@import url(font-awesome.css);
+html,body{font-family:'Open Sans', sans-serif;font-size:13px;font-weight:400;color:#555;height:100%;width:100%!important;background-color:#33383d;margin:0;padding:0}
+.icon-block{display:block;float:left;width:120px;text-align:center;height:120px;background:#f1f1f1;border-radius:50%;font-style:italic;color:#999;margin:0 10px;padding:20px}
+.powerwidget{position:relative;background-color:#c4c5c5;border-radius:3px;margin:0 0 20px;padding:0}
+.powerwidget > header{height:40px;line-height:40px;padding:0 0 0 10px}
+.ui-sortable .powerwidget-sortable > header{cursor:move}
+.powerwidget > header h2{height:100%;letter-spacing:normal;width:auto;float:left;font-size:1.2em;position:relative;line-height:40px;margin:0}
+.powerwidget > header .powerwidget-icon{width:16px;height:16px;float:left;display:block;zoom:1;z-index:4000;text-align:center;line-height:16px;font-size:13px;margin:12px 5px 0 0}
+.powerwidget-ctrls{width:auto;float:right;margin:0 5px 0 0;padding:10px 2px 0 0}
+.powerwidget-ctrls .button-icon{float:left;position:relative;line-height:16px;text-align:center;font-size:.9em;color:#fff;margin:1px}
+.powerwidget-ctrls .button-icon i{width:18px;text-align:center}
+.powerwidget-ctrls .button-icon:hover{text-decoration:none}
+.powerwidget > div{float:left;min-height:20px;position:relative;background-color:#fff;margin:0}
+.powerwidget .inner-spacer{border-bottom-left-radius:3px;border-bottom-right-radius:3px;padding:10px}
+.powerwidget-editbox input{width:85%}
+.powerwidget-editbox{display:none;background-color:#969fa1;padding:10px 10px 0}
+.powerwidget-editbox div{width:100%;float:left;margin-bottom:10px}
+.powerwidget-editbox label{width:15%;color:#fff;float:left;line-height:25px}
+.powerwidget-editbox span{height:17px;width:17px;border-radius:50%;float:left;cursor:pointer;box-shadow:0 0 0 4px rgba(255,255,255,.3);margin:7px 5px}
+.powerwidget-editbox span:hover{box-shadow:0 0 0 4px rgba(0,0,0,.1)}
+.powerwidget > header,.powerwidget > header small{color:#fff}
+.powerwidget-loader{-webkit-animation:spin 3s infinite linear;-moz-animation:spin 3s infinite linear;-o-animation:spin 3s infinite linear;animation:spin 3s infinite linear;font-size:13px;margin-right:5px;float:right;line-height:38px;display:none}
+.powerwidget:after,.powerwidget > div:after,.inner-spacer:after,.powerwidget-editbox:after,.clearfix:after{clear:both}
+.powerwidget,.powerwidget > div,.inner-spacer:after,.powerwidget-editbox,.clearfix{zoom:1}
+.content-wrapper{position:relative;overflow-x:hidden;top:0;height:auto!important;min-height:100%!important;right:0;background:#f0f0ed;border-top-left-radius:3px;border-top-right-radius:3px;box-shadow:0 0 3px 3px rgba(0,0,0,0.2);transition:all .3s ease-in-out 0;margin:0 10px 0 200px;padding:15px}
+.powerwidget-as-portlet-white,.bg-white,.powerwidget-as-portlet-white .inner-spacer{background:#fff;color:#555}
+.powerwidget-as-portlet-white h2,.powerwidget-as-portlet-white h2 small,.powerwidget-as-portlet-white .powerwidget-ctrls .button-icon{color:#555}
+.powerwidget-as-portlet-green,.powerwidget-as-portlet-green .inner-spacer{background:#82b964;color:#fff}
+.powerwidget-as-portlet-orange,.powerwidget-as-portlet-orange .inner-spacer{background:#f0ad4e;color:#fff}
+.pink-btn,.bg-pink,.powerwidget.pink{background-color:#f87aa0}
+.blue-btn,.bg-blue,.powerwidget.blue{background-color:#5bc0de}
+.dark-blue-btn,.bg-dark-blue,.powerwidget.dark-blue{background-color:#3b8dbd}
+.green-btn,.bg-green,.powerwidget.green{background-color:#82b964}
+.green-alt-btn,.bg-green-alt,.powerwidget.green-alt{background-color:#58b868}
+.green-acid-btn,.bg-acid-green,.powerwidget.green-acid{background-color:#ccd600}
+.yellow-btn,.bg-yellow,.powerwidget.yellow{background-color:#f4cc13}
+.yellow-muted-btn,.bg-yellow-muted,.powerwidget.yellow-muted{background-color:#fffbdb}
+.purple-btn,.bg-purple,.powerwidget.purple{background-color:#a7609a}
+.cold-grey-btn,.bg-cold-grey,.powerwidget.cold-grey{background-color:#595f66}
+.dark-cold-grey-btn,.bg-dark-cold-grey,.powerwidget.dark-cold-grey{background-color:#454b52}
+.orange-btn,.bg-orange,.powerwidget.orange{background-color:#f0ad4e}
+.red-btn,.bg-red,.powerwidget.red{background-color:#d24d33}
+.dark-red-btn,.bg-dark-red,.powerwidget.dark-red{background-color:#993838}
+.black-btn,.bg-black,.powerwidget.black{background-color:#000}
+
+
+
+/* Fullscreen */
+
+body.nooverflow{overflow:hidden;position:fixed}
+#powerwidget-fullscreen-mode{width:100%;height:100%;position:fixed;top:0;left:0;z-index:99999}
+#powerwidget-fullscreen-mode .powerwidget{border-radius:0;margin:0}
+#powerwidget-fullscreen-mode .powerwidget > div{overflow-y:scroll;border-radius:0}
+#powerwidget-fullscreen-mode > div > header{cursor:default}
+.powerwidget > header{height:40px;line-height:40px;padding:0 0 0 10px}
+.ui-sortable .powerwidget-sortable > header{cursor:move}
+.powerwidget > header h2{height:100%;letter-spacing:normal;width:auto;float:left;font-size:1.2em;position:relative;line-height:40px;margin:0}
+.powerwidget > header .powerwidget-icon{width:16px;height:16px;float:left;display:block;zoom:1;z-index:4000;text-align:center;line-height:16px;font-size:13px;margin:12px 5px 0 0}
+.powerwidget-ctrls{width:auto;float:right;margin:0 5px 0 0;padding:10px 2px 0 0}
+.powerwidget-ctrls .button-icon{float:left;position:relative;line-height:16px;text-align:center;font-size:.9em;color:#fff;margin:1px}
+.powerwidget-ctrls .button-icon i{width:18px;text-align:center}
+.powerwidget > div{float:left;width:100%;min-height:20px;position:relative;background-color:#fff;margin:0}
+.powerwidget .inner-spacer{border-bottom-left-radius:3px;border-bottom-right-radius:3px;padding:10px}
+.powerwidget-editbox input{width:85%}
+.powerwidget-editbox{display:none;background-color:#969fa1;padding:10px 10px 0}
+.powerwidget-editbox div{width:100%;float:left;margin-bottom:10px}
+.powerwidget-editbox label{width:15%;color:#fff;float:left;line-height:25px}
+.powerwidget-editbox span{height:17px;width:17px;border-radius:50%;float:left;cursor:pointer;box-shadow:0 0 0 4px rgba(255,255,255,.3);margin:7px 5px}
+.powerwidget-editbox span:hover{box-shadow:0 0 0 4px rgba(0,0,0,.1)}
+.powerwidget-timestamp{font-size:.9em}
+.powerwidget-placeholder{border-radius:3px;margin-bottom:20px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;background:url(bg-stripped.png);padding:0}
+blockquote{border-left:5px solid #c0c2c7}
+.dropcap{display:block;background:#f1f1f1;color:#555;float:left;line-height:40px;font-size:50px;font-weight:700;margin-right:10px;padding:8px 8px 12px}
+.dark-block{width:150px;font-size:.95em;margin-left:10px;background:#555;color:#fff;padding:20px}
+.scissors-block{border:2px dotted #999;border-radius:5px;position:relative;margin:20px 15px;padding:20px}
+.scissors-block:before{font-family:FontAwesome;content:"\f0c4";color:#999;background:#fff;text-align:center;height:30px;width:30px;font-size:15px;position:absolute;top:-20px;right:49%;-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);-ms-transform:rotate(180deg);-o-transform:rotate(180deg);filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3)}
+.scissors-block:after{font-family:FontAwesome;content:"\f0c4";color:#999;background:#fff;text-align:center;height:30px;width:30px;font-size:15px;position:absolute;bottom:-20px;right:49%}
+.icon-block{display:block;float:left;width:120px;text-align:center;height:120px;background:#f1f1f1;border-radius:50%;font-style:italic;color:#999;margin:0 10px;padding:20px}
+.powerwidget{position:relative;background-color:#c4c5c5;border-radius:3px;margin:0 0 20px;padding:0}
+.powerwidget-loader{-webkit-animation:spin 3s infinite linear;-moz-animation:spin 3s infinite linear;-o-animation:spin 3s infinite linear;animation:spin 3s infinite linear;font-size:13px;margin-right:5px;float:right;line-height:38px;display:none}
+.powerwidget-loader:before{font-family:FontAwesome;content:"\f1ce"}
+.powerwidget:before,.powerwidget:after,.powerwidget > div:before,.powerwidget > div:after,.inner-spacer:before,.inner-spacer:after,.powerwidget-editbox:before,.powerwidget-editbox:after,.clearfix:before,.clearfix:after{content:"\0020";display:block;height:0;overflow:hidden;font-size:0;line-height:0;visibility:hidden}
+.powerwidget,.powerwidget > div,.inner-spacer:after,.powerwidget-editbox,.clearfix{zoom:1}

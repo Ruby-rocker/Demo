@@ -1,0 +1,40 @@
+.user_details.clearfix
+  %h2 Template's Details
+  %hr
+    .popup_row.clearfix
+      %p
+        %b Template Name :
+        = @template_master.name
+      %br/
+      %p
+        %b Image:
+        - if @image.present?
+          = image_tag(@image.attachment(:small))
+      %br/
+      %p
+        %b Icon:
+        - if @image.present?
+          = image_tag @image.attachment_icon(:small)
+      %br/
+      %p
+        %b Description:
+        = @template_master.description
+      %br/
+      %p
+        %b Header Text :
+        = @template_master.header_text
+      %br/
+      %p
+        %b Amount :
+        = @template_master.amount
+      %br/
+      %p
+        %b Coupn Code :
+        = @template_master.coupon_code
+      %br/
+      %p
+        %b Status:
+        = @template_master.isactive
+
+    = link_to 'Edit', edit_template_master_path(@template_master),:class=>'blue_btn'
+    = link_to 'Back', template_masters_path,:class=>'blue_btn'

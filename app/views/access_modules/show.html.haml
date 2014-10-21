@@ -1,0 +1,16 @@
+.user_details.clearfix
+  %h2 Access Module's Details
+  %hr
+  .innerpage2.clearfix
+    %p#notice= notice
+    .popup_row.clearfix
+      %p
+        %b Name :
+        = @access_module.name
+      %br/
+      %p
+        %b Status :
+        = @access_module.isactive
+      %br/
+    = link_to 'Edit', edit_access_module_path(@access_module),:class=>'blue_btn'
+    = link_to 'Back', access_modules_path,:class=>'blue_btn'

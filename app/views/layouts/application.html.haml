@@ -1,0 +1,35 @@
+!!!
+%html
+  %head
+    %title iConnect
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = favicon_link_tag# 'favicon.ico'
+    = csrf_meta_tags
+  - if current_page?(new_admin_session_path)
+    %body.bodybg_login
+  - else
+    %body
+  .wrapper
+    / header Section
+    = render "layouts/header"
+    / header Section
+    / Middle Section
+    .middle_section.clearfix
+      .auto
+        -#- if current_page?(new_admin_session_path)
+        -#  %p{:class=>"alert testclass"}= alert
+        -#- else
+        -#  %p.alert= alert
+
+        %p.alert= alert
+        %p.alert= notice
+        = yield
+    / Middle Section
+    .footerfix.clearfix
+  / wrapper end
+  / footer Section
+  .footer.clearfix
+    .auto
+      .copyright © 2014 iConnect All Rights Reserved
+  / footer Section

@@ -1,0 +1,31 @@
+.user_details.clearfix
+  %h3 Listing Access Modules
+  %input.blue_btn.frd{type: "submit", value: "Submit"}/
+  .selectbox.blueselect.frd
+    %select.select1
+      %option Select Action
+      %option Delete
+      %option Change status
+  %label.actionlabel Actions
+#accordion.tablerow.clearfix
+  %table.tablelist{border: "0", cellpadding: "0", cellspacing: "0", width: "100%"}
+    %tr
+      %th{align: "left", valign: "middle"}  
+      %th{align: "left", valign: "middle"} Sr. No.
+      %th{align: "left", valign: "middle"} Name
+      %th{align: "left", valign: "middle"} Status
+      %th{align: "left", valign: "middle"}
+      %th{align: "left", valign: "middle"}
+    - @count=0
+    - @access_modules.each do |access_module|
+      %tr
+        %td{align: "left", valign: "middle"}
+          %input.checkbox{type: "checkbox"}/
+        %td{align: "left", valign: "middle"}= @count += 1
+        %td{align: "left", valign: "middle"}= access_module.name
+        %td{align: "left", valign: "middle"}= access_module.isactive
+        %td{align: "left", valign: "middle"}= link_to 'Show', access_module
+        %td{align: "left", valign: "middle"}= link_to 'Edit', edit_access_module_path(access_module)
+
+  %br
+  = link_to 'New Access Module', new_access_module_path, :class=>'blue_btn'

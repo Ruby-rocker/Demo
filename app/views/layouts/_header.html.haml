@@ -1,0 +1,56 @@
+- if !current_admin
+  .header.loginpage
+    .auto
+      = link_to (image_tag 'logo.png', size: '152x31', alt: ''), root_path, :class => 'logo'
+      .companyname Innovative Technology Era
+- else
+  .header
+    .logindetail
+      .auto
+        %ul.loginlinks
+          %li
+            = link_to "Welcome, #{current_admin.show_name}", root_path, :class => 'welcom_icon'
+          %li
+            = link_to 'My Account', edit_admin_registration_path(current_admin), :class => "welcom_icon"
+          %li
+            = link_to 'Logout', destroy_admin_session_path, :method => "delete", :class => "logout_icon"
+          %li
+            %a.help_icon{href: comingsoon_path} Help
+          - if current_admin.is_superadmin?
+            %li
+              = link_to 'Settings', push_configurations_path, :class => "setting_icon"
+    .header_middle.clearfix
+      .auto
+        = link_to (image_tag 'logo.png', size: '152x31', alt: ''), root_path, :class => 'logo'
+        .searchsection
+          %input.searchbox{placeholder: "Search", type: "search"}/
+          %input.search_btn{type: "submit"}/
+    .topmenu
+      .auto
+        %ul
+          %li
+            %a{href: root_path, :class => current_class?(root_path)} Dashboard
+          - if can? :crud, Role
+            %li
+              %a{href: roles_path, :class => current_class?(roles_path)} Role
+          - if can? :crud, Ibeacon
+            %li
+              %a{href: ibeacons_path, :class => current_class?(ibeacons_path)} Beacon
+          - if can? :crud, Campaign
+            %li
+              %a.highlight{href: campaigns_path, :class => current_class?(new_campaign_path)} Campaign
+          - if can? :crud, TemplateMaster
+            %li
+              %a{href: template_masters_path, :class => current_class?(new_template_master_path)} Template
+          - if can? :crud, Location
+            %li
+              %a{href: locations_path, :class => current_class?(locations_path)} Location
+          - if can? :crud, Store
+            %li
+              %a{href: find_ways_path, :class => current_class?(find_ways_path)} Find A Way
+          %li
+            %a{href: analytics_path, :class => current_class?(analytics_path)} Analytics
+
+          - if can? :crud, Campaign
+            %li
+              %a{href: campaign_rules_path, :class => current_class?(campaign_rules_path)} Rules

@@ -1,0 +1,24 @@
+.user_details.clearfix
+  %h2 Role's Details
+  %hr
+  .innerpage2.clearfix
+    %p#notice= notice
+    .popup_row.clearfix
+      %p
+        %b Name:
+        = @role.name
+      %br/
+      %p
+        %b Description:
+        = @role.description
+      %br/
+      %p
+        %b Access Module:
+        = @role.access_module_roles.map { |amr| amr.access_module.name }.join(", ")
+      %br/
+      %p
+        %b Status:
+        = @role.isactive
+      %br/
+    = link_to 'Edit', edit_role_path(@role),:class=>'blue_btn'
+    = link_to 'Back', roles_path,:class=>'blue_btn'

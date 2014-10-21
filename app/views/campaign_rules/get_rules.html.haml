@@ -1,0 +1,59 @@
+= javascript_include_tag 'myfunction', 'data-turbolinks-track' => true
+= javascript_include_tag 'tab', 'data-turbolinks-track' => true
+= javascript_include_tag 'jquery.uniform.min', 'data-turbolinks-track' => true
+
+.store_row.clearfix
+  .storename Welcome Message
+  .button_right
+  .heat_list.clearfix
+    .heat_row.clearfix
+      .heat_name.ruleLabel Delay second time welcome message by
+      .popup_fild
+        .selectbox5.ruleDivTime
+          = select(:campaign_rule, :second_welcome_min, options_for_select(DELAY_MIN.collect {|t| [ t.last, t.first ]}, (@campaign_rule.second_welcome_min rescue 0)), {include_blank: 'Minute'}, class: 'select1')
+        .selectbox5.ruleDivTime
+          = select(:campaign_rule, :second_welcome_hour, options_for_select(DELAY_HOUR.collect {|t| [ t.last, t.first ] }, (@campaign_rule.second_welcome_hour rescue 0)), {include_blank: 'Hour'}, class: 'select1')
+.store_row.clearfix
+  .storename Message Delay
+  .button_right
+  .heat_list.clearfix
+    .heat_row.clearfix
+      .heat_name.ruleLabel Delay message delivery by
+      .popup_fild
+        .selectbox5.ruleDivTime
+          = select(:campaign_rule, :message_delay_second, options_for_select(DELAY_MIN.collect {|t| [ t.last, t.first ] }, (@campaign_rule.message_delay_second rescue 0)),{include_blank: 'Second'}, class: 'select1')
+        .selectbox5.ruleDivTime
+          = select(:campaign_rule, :message_delay_min, options_for_select(DELAY_MIN.collect {|t| [ t.last, t.first ] }, (@campaign_rule.message_delay_min rescue 0)),{include_blank: 'Minute'}, class: 'select1')
+        .selectbox5.ruleDivTime
+          = select(:campaign_rule, :message_delay_hour, options_for_select(DELAY_HOUR.collect {|t| [ t.last, t.first ] }, (@campaign_rule.message_delay_hour rescue 0)),{include_blank: 'Hour'}, class: 'select1')
+
+.store_row.clearfix
+  .storename Limits
+  .button_right
+  .heat_list.clearfix
+    .heat_row.clearfix
+      .heat_name.ruleLabel Do not send more than
+      %div{:style => 'float: left;'}
+        .selectbox5.ruleDivTime
+          = select(:campaign_rule, :campaign_limit_message, options_for_select(DELAY_MIN.collect {|t| [ t.last, t.first ] }, (@campaign_rule.campaign_limit_message rescue 0)),{include_blank: 'Message'}, class: 'select1')
+        .heat_name{:style => 'margin-right: 10px;'} messages within
+        .selectbox5.ruleDivTime
+          = select(:campaign_rule, :campaign_limit_second, options_for_select(DELAY_MIN.collect {|t| [ t.last, t.first ] }, (@campaign_rule.campaign_limit_second rescue 0)),{include_blank: 'Second'}, class: 'select1', :onchange => 'disable_limit_campaigns(this.id, this.value)')
+        .selectbox5.ruleDivTime
+          = select(:campaign_rule, :campaign_limit_min, options_for_select(DELAY_MIN.collect {|t| [ t.last, t.first ] }, (@campaign_rule.campaign_limit_min rescue 0)),{include_blank: 'Minute'}, class: 'select1', :onchange => 'disable_limit_campaigns(this.id, this.value)')
+        .selectbox5.ruleDivTime
+          = select(:campaign_rule, :campaign_limit_hour, options_for_select(DELAY_HOUR.collect {|t| [ t.last, t.first ] }, (@campaign_rule.campaign_limit_hour rescue 0)),{include_blank: 'Hour'}, class: 'select1', :onchange => 'disable_limit_campaigns(this.id, this.value)')
+        .selectbox5.ruleDivTime
+          = select(:campaign_rule, :campaign_limit_days, options_for_select(DELAY_DAYS.collect {|t| [ t.last, t.first ] }, (@campaign_rule.campaign_limit_days rescue 0)),{include_blank: 'Days'}, class: 'select1', :onchange => 'disable_limit_campaigns(this.id, this.value)')
+.store_row.clearfix
+  .storename Deactivate Campaigns
+  .button_right
+  .heat_list.clearfix
+    .heat_row.clearfix
+      .heat_name.ruleLabel Deactivate campaign after
+      .popup_fild
+        .selectbox5.ruleDivTime
+          = select(:campaign_rule, :deactivate_campaign, options_for_select(DELAY_DAYS.collect {|t| [ t.last, t.first ] }, (@campaign_rule.deactivate_campaign rescue 0)),{include_blank: 'Days'}, class: 'select1')
+
+  .popup_row.button_wrapper2
+    = submit_tag "Create Rule", :class=>'blue_btn'

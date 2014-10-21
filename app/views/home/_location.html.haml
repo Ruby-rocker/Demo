@@ -1,0 +1,29 @@
+#accordion.dragbox_content.clearfix
+  %h3.headin_h3 Create Location
+  = form_for @location, html: {id: :frm_save_location} do |f|
+    = f.hidden_field(:is_active, :value => true)
+    .panel-body2
+      .role_content
+        .formrow2
+          = f.label(:name ,:class => 'username')
+          = f.text_field :name, :class=>'textbox2'
+        = f.fields_for :stores do |f_store|
+          .formrow2
+            = f_store.text_field :name, :class => 'textbox2', :placeholder => 'Store 1'
+          = image_tag('pluse_sign.png', :id=>'add_store', :class => 'beside_textbox')
+          .formrow2#append_store
+        = submit_tag 'Submit', :class=>'blue_btn', onclick: "return frm_validate_location()"
+
+
+:javascript
+  $(document).ready(function(){
+  var i = 1;
+  $('#add_store').click(function(){
+  $('#append_store').append("<div id='div_"+i+"' class='formrow2'><input type='text' class='textbox3' name='location[stores_attributes]["+i+"][name]' placeholder='Store "+(i+1)+"'><img src='/assets/minas_sign.png' id='"+i+"' onclick='remove_this_div(this.id)' alt='Minus sign' class='beside_textbox'></div>");
+  i++
+  });
+  });
+
+  function remove_this_div(div_id){
+  $('#div_'+div_id).remove();
+  }

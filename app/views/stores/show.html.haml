@@ -1,0 +1,20 @@
+.user_details.clearfix
+  %h2 Store's Details
+  %hr
+  .innerpage2.clearfix
+    %p#notice= notice
+    .popup_row.clearfix
+      %p
+        %b Name:
+        = @store.name
+      %br/
+      %p
+        %b Location:
+        = @store.location.name
+      %br/
+      %p
+        %b Status:
+        = @store.isactive
+      %br/
+    = link_to 'Edit', edit_store_path(@store),:class=>'blue_btn'
+    = link_to 'Back', stores_path,:class=>'blue_btn'

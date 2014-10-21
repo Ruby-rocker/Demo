@@ -1,0 +1,43 @@
+%div{:class=>'dragbox autodiv w922'}
+  .drag_head
+    %h2 Role
+    -#.drag_btn
+    -#  %a{:href => '#'}
+  %div{:class=>'innerpage2 clearfix'}
+    = form_for @role, :html => {:onsubmit => 'return validate_role_form()'} do |f|
+      .popup_content
+      - if @role.errors.any?
+        #error_explanation
+          %h2
+            = pluralize(@role.errors.count, "error")
+            prohibited this role from being saved:
+          %ul
+            - @role.errors.full_messages.each do |message|
+              %li= message
+      .popup_row.clearfix
+        = f.label :name,'Name*', :class=>'title_name'
+        .popup_fild
+          = f.text_field :name, :class=>'textbox2 boxw290'
+          %span{id:'name_error' ,style: 'display:none;color:#C9E3F6;font-size: 15px;'} Enter Role Name
+      .popup_row.clearfix
+        = f.label :description, :class=>'title_name'
+        .popup_fild
+          = f.text_area :description, :class=>'textbox2 boxw290'
+      .popup_row.clearfix
+        = f.label :access_modules,'Access Modules*', :class=>'title_name'
+        .popup_fild
+          .checkbox_list
+            .checktext
+            = f.collection_check_boxes :access_module_ids, AccessModule.active, :id, :name, {},:class=>'checkbox'
+            %span{id:'error' ,style: "display:none;color:#C9E3F6;font-size: 15px;"} Select atleast one Module
+      .popup_row.clearfix
+        %label.title_name Status
+        .popup_fild.switch
+          %label.status_active.selected
+            %span Active
+          %label.status
+            %span Inactive
+            = f.check_box :is_active,:class=>'checkbox'
+      .popup_row.button_wrapper2
+        = f.submit 'Save',:class=>'blue_btn'
+        = link_to 'Cancel', roles_path,:class=>'blue_btn'

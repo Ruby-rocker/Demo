@@ -1,0 +1,13 @@
+= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+  .login_box
+    .iconrow
+      %span.emailicon
+      = f.text_field :login, autofocus: true, :class => "textbox", placeholder: "rob@abc.com"
+    .iconrow
+      %span.key_icon
+      = f.password_field :password, autocomplete: "off", :class => "textbox", placeholder: "**********"
+    .formrow.clearfix
+      %div= f.submit "Login", :class => "submitbtn"
+      = link_to "Cancel", root_url, :class => "submitbtn cancelbtn frd"
+    .formrow.clearfix
+      = render "devise/shared/links"

@@ -1,0 +1,2 @@
+module FindWaysHelper
+end

@@ -1,0 +1,47 @@
+= form_for :contact ,:url => remove_multiple_contact_path, :html=>{:id=>'frm4'}do |f|
+  .user_details.clearfix
+    %h3 Listing Contacts
+    .selectbox.blueselect.frd
+      = f.select(:name, [['Delete', 'delete']],{:include_blank=> 'Select Action'},{:class=>'select1'})
+      = f.submit 'Submit', :class=>'blue_btn'
+    %label.actionlabel Actions
+  #accordion.tablerow.clearfix
+    %table.tablelist{border: "0", cellpadding: "0", cellspacing: "0", width: "100%"}
+      %tr
+        %th{align: "left", valign: "middle"}
+        %th{align: "left", valign: "middle"} Sr. No.
+        %th{align: "left", valign: "middle"} UUID
+        %th{align: "left", valign: "middle"} UDID
+        %th{align: "left", valign: "middle"} First Name
+        %th{align: "left", valign: "middle"} Last Name
+        %th{align: "left", valign: "middle"} Email Address
+        %th{align: "left", valign: "middle"} Contact No.
+        %th{align: "left", valign: "middle"} Latitude
+        %th{align: "left", valign: "middle"} Longitude
+      - @count=0
+      - @contacts.each do |contact|
+        %tr
+          %td{align: "left", valign: "middle"}
+            .checkbox_list.checktext
+              = check_box('contact[chk_ids]', contact.id, :class=>'checkbox')
+          %td{align: "left", valign: "middle"}= @count += 1
+          %td{align: "left", valign: "middle"}= contact.uuid
+          %td{align: "left", valign: "middle"}= contact.udid
+          %td{align: "left", valign: "middle"}= contact.first_name
+          %td{align: "left", valign: "middle"}= contact.last_name
+          %td{align: "left", valign: "middle"}= contact.email_address
+          %td{align: "left", valign: "middle"}= contact.contact_no
+          %td{align: "left", valign: "middle"}= contact.latitude
+          %td{align: "left", valign: "middle"}= contact.longitude
+    %br
+    = link_to 'New Contact', new_contact_path, :class=>'blue_btn'
+:javascript
+  $("#frm4").submit(function(event){
+    var valDDL = $("#contact_name").val();
+    if(valDDL=="")
+    {
+      event.preventDefault();
+      alert("Select an Action");
+    }
+
+  });
